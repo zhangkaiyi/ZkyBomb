@@ -1,0 +1,24 @@
+## Interface: 11304
+## Title: |CFFFF8000Zky|R Bomb
+## SavedVariables: ZkyBombDB
+
+UI/Templates.xml
+ZkySettingsCreator.lua
+
+i18n/loc.lua
+i18n/enUS.lua
+i18n/deDE.lua
+i18n/zhCN.lua
+
+ZkyLib.lua
+ZkyDialog.lua
+Main.lua
+
+ZkyBomb.lua
+ZkyBombOptions.lua
+
+UI/MainUI.lua
+UI/MainUI_functions.lua
+UI/SettingUI.lua
+UI/SettingUI_functions.lua
+UI/minimapButton.lua
