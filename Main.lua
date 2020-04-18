@@ -205,7 +205,7 @@ function _addon:ResetCurrentTimes()
     ZkyBombDB.Times.Current = 0;
     print(_addon:IsSendResetMessage())
     if _addon:IsSendResetMessage() then 
-        print(_addon:GetResetMessageSendType())
+        -- print(_addon:GetResetMessageSendType())
         SendChatMessage(_addon:GetResetMessage(), _addon:GetResetMessageSendType())
     end
 end

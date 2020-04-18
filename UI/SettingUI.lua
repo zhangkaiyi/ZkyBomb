@@ -290,10 +290,78 @@ do
     resetFrame.messageLabel:SetPoint("TOPLEFT", resetFrame, "TOPLEFT", 10, -35);
     resetFrame.messageLabel:SetText('重置信息');
     resetFrame.messageLabel:SetJustifyH("LEFT");
-    resetFrame.messageEdit = MakeEditBox(resetFrame, 3, 27, false);
+    resetFrame.messageEdit = MakeEditBox(resetFrame, 100, 27, false);
     resetFrame.messageEdit:SetPoint("LEFT", resetFrame.messageLabel, "RIGHT", 5, -1);
     resetFrame.messageEdit:SetPoint("RIGHT", resetFrame, "RIGHT", -10, -1);
     resetFrame.messageEdit:SetScript("OnTextChanged", function(self) 
         ZkyBombDB.Times.Reset.Message = self:GetText()
     end);
+end
+
+local svTable={}
+local SOUNDS = {
+    [""] = L["SOUND_NO_SOUND"],
+    ["sound/Doodad/LightHouseFogHorn.ogg"] = "Fog horn", 		                    -- 567094
+    ["sound/interface/itellmessage.ogg"] = "Whisper", 		                        -- 567421
+    ["sound/character/dwarf/dwarfmale/dwarfmaledeatha.ogg"] = "Dwarf", 		        -- 539885
+    ["sound/item/weapons/bow/arrowhitc.ogg"] = "Something", 	                    -- 567671
+    ["sound/item/weapons/bow/arrowhita.ogg"] = "Something2",                        -- 567672
+    ["sound/item/weapons/axe2h/m2haxehitmetalweaponcrit.ogg"] = "Hurts my ears"     -- 567653
+};
+local SENDTYPES = {
+    ["队伍"] = "PARTY",
+    ["大喊"] = "YELL",
+    ["公会"] = "GUILD",
+    ["团队"] = "RAID",
+    ["说"] = "SAY"
+};
+-- Hanlde dropdown refresh
+local function DropdownRefresh(self)
+    print('DropdownRefresh')
+    local optionName = "NOT SET!";
+    for k,v in pairs(self.GetListItems()) do
+        if k == svTable[self.settingName] then
+            optionName = v;
+            break;
+        end
+    end
+    UIDropDownMenu_SetText(self, optionName);
+end;
+local function DropdownOpen(self, level, menuList)
+    -- print('DropdownOpen Start')
+    local info = UIDropDownMenu_CreateInfo();
+    info.func = function(selfb, arg1, arg2)
+        print(arg2)
+        ZkyBombDB.Times.Reset.MessageSendType = arg2;
+        UIDropDownMenu_SetText(self, arg1);
+    end;
+        local sendType = _addon:GetResetMessageSendType()
+        for k, v in pairs(self.GetListItems()) do
+        info.text = k;
+        info.arg1 = k;
+        info.arg2 = v;
+        if sendType ~= nil then
+            info.checked = (v == sendType);
+        else
+            info.checked = "PARTY";
+        end
+        UIDropDownMenu_AddButton(info);
+    end
+    -- print('DropdownOpen End')
+end
+
+do
+    local resetFrame = ZKYBOMB_SettingUI2;
+    resetFrame.sendTypeLabel = resetFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
+    resetFrame.sendTypeLabel:SetPoint("TOPLEFT", resetFrame.messageLabel, "BOTTOMLEFT", 0, -20);
+    resetFrame.sendTypeLabel:SetText('通知方式');
+    resetFrame.sendTypeLabel:SetJustifyH("LEFT");
+    resetFrame.sendTypeDropdown = CreateFrame("Frame", nil, resetFrame, "UIDropDownMenuTemplate");
+    resetFrame.sendTypeDropdown:SetPoint("LEFT", resetFrame.sendTypeLabel, "RIGHT", -10, -4);
+    resetFrame.sendTypeDropdown:SetPoint("RIGHT", resetFrame, "RIGHT", 10, 0);
+    resetFrame.sendTypeDropdown.RefreshState = DropdownRefresh;
+    resetFrame.sendTypeDropdown.GetListItems = function() return SENDTYPES end;
+    UIDropDownMenu_SetWidth(resetFrame.sendTypeDropdown, resetFrame.messageEdit:GetWidth()-10);
+    UIDropDownMenu_SetText(resetFrame.sendTypeDropdown,'队伍')
+    UIDropDownMenu_Initialize(resetFrame.sendTypeDropdown, DropdownOpen)
 end
