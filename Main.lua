@@ -88,6 +88,8 @@ function handlers.ADDON_LOADED(addonName)
     if ZkyBombDB.Times.PerRound == nil then ZkyBombDB.Times.PerRound = 5 end
     if ZkyBombDB.Times.Total == nil then ZkyBombDB.Times.Total = 0 end
     if ZkyBombDB.Channels == nil then ZkyBombDB.Channels = {} end
+    if ZkyBombDB.Times.ResetMessage == nil then ZkyBombDB.Times.ResetMessage = '' end
+    if ZkyBombDB.Times.IsSendResetMessage == nil then ZkyBombDB.Times.IsSendResetMessage = true end
 
     -- _addon:SetupSettings();
 
@@ -180,7 +182,17 @@ function _addon:GetJoinedChannels()
     return channels
 end
 
+function _addon:IsSendResetMessage()
+    local current = ZkyBombDB['Times']['IsSendResetMessage']
+    return current
+end
+
+function _addon:GetResetMessage()
+    local current = ZkyBombDB['Times']['ResetMessage']
+    return current
+end
+
 function _addon:ResetTimes()
     ZkyBombDB['Times']['Current'] = 0;
-    SendChatMessage('计数已重置', msgType.Party)
+    SendChatMessage('计数已重置', 'PARTY')
 end
