@@ -19,7 +19,7 @@ frame:SetClampedToScreen(true);
 -- frame:SetMovable(true);
 frame:EnableMouse(true);
 frame.TitleText:SetText('频道与次数');
-frame.portrait:SetTexture([[Interface\AddOns\ZkyBomb\img\logo]]);
+-- frame.portrait:SetTexture([[Interface\AddOns\ZkyBomb\img\logo]]);
 -- frame.CloseButton:SetScript('OnClick',nil)
 frame.CloseButton:Hide()
 frame.TopRightCorner:SetWidth(18);
@@ -31,35 +31,6 @@ frame.TitleBg:SetPoint("TOPRIGHT",-2,-3)
 
 ButtonFrameTemplate_HideButtonBar(frame);
 ButtonFrameTemplate_HidePortrait(frame)
-
--- Main frame
-local frame2 = CreateFrame("Frame", "ZKYBOMB_SettingUI2", frame, "ButtonFrameTemplate");
-frame2:SetPoint('TOP', frame, 'BOTTOM', 0, -5)
-frame2:SetPoint('LEFT', frame, 'LEFT', 0, 0)
-frame2:SetPoint('RIGHT', frame, 'RIGHT', 0, 0)
-frame2:SetPoint('BOTTOM', ZKYBOMB_MainUI, 'BOTTOM', 0, 0)
--- frame2:SetWidth(320);
--- frame2:SetHeight(MIN_ITEMS*LIST_ITEM_HEIGHT + HEIGHT_NO_CONTENT);
--- frame:SetResizable(true);
-frame2:SetClampedToScreen(true);
--- frame:SetMaxResize(600, MAX_ITEMS*LIST_ITEM_HEIGHT + HEIGHT_NO_CONTENT);
--- frame:SetMinResize(250, MIN_ITEMS*LIST_ITEM_HEIGHT + HEIGHT_NO_CONTENT);
--- frame:SetMovable(true);
-frame2:EnableMouse(true);
-frame2.TitleText:SetText('频道与次数');
-frame2.portrait:SetTexture([[Interface\AddOns\ZkyBomb\img\logo]]);
--- frame.CloseButton:SetScript('OnClick',nil)
-frame2.CloseButton:Hide()
-frame2.TopRightCorner:SetWidth(18);
-frame2.TopRightCorner:SetTexCoord(0.75, 0.89062500, 0.00781250, 0.26562500);
-frame2.TitleBg:SetPoint("TOPLEFT",2,-3)
-frame2.TitleBg:SetPoint("TOPRIGHT",-2,-3)
--- ZKYBOMB_SettingUICloseButton:SetScript('OnClick',nil)
--- frame:Hide();
-
-ButtonFrameTemplate_HideButtonBar(frame2);
-ButtonFrameTemplate_HidePortrait(frame2);
-ButtonFrameTemplate_HideAttic(frame2);
 
 
 -- Delete button for delete all function
@@ -281,4 +252,48 @@ for i = 1, MAX_ITEMS, 1 do
 ---- hk }
     
 	frame.scrollFrame.items[i] = item;
+end
+
+
+-- Main frame
+local frame2 = CreateFrame("Frame", "ZKYBOMB_SettingUI2", frame, "ButtonFrameTemplate");
+frame2:SetPoint('TOP', frame, 'BOTTOM', 0, -5)
+frame2:SetPoint('LEFT', frame, 'LEFT', 0, 0)
+frame2:SetPoint('RIGHT', frame, 'RIGHT', 0, 0)
+frame2:SetPoint('BOTTOM', ZKYBOMB_MainUI, 'BOTTOM', 0, 0)
+-- frame2:SetWidth(320);
+-- frame2:SetHeight(MIN_ITEMS*LIST_ITEM_HEIGHT + HEIGHT_NO_CONTENT);
+-- frame:SetResizable(true);
+frame2:SetClampedToScreen(true);
+-- frame:SetMaxResize(600, MAX_ITEMS*LIST_ITEM_HEIGHT + HEIGHT_NO_CONTENT);
+-- frame:SetMinResize(250, MIN_ITEMS*LIST_ITEM_HEIGHT + HEIGHT_NO_CONTENT);
+-- frame:SetMovable(true);
+frame2:EnableMouse(true);
+frame2.TitleText:SetText('其他设置');
+-- frame2.portrait:SetTexture([[Interface\AddOns\ZkyBomb\img\logo]]);
+-- frame.CloseButton:SetScript('OnClick',nil)
+frame2.CloseButton:Hide()
+frame2.TopRightCorner:SetWidth(18);
+frame2.TopRightCorner:SetTexCoord(0.75, 0.89062500, 0.00781250, 0.26562500);
+frame2.TitleBg:SetPoint("TOPLEFT",2,-3)
+frame2.TitleBg:SetPoint("TOPRIGHT",-2,-3)
+-- ZKYBOMB_SettingUICloseButton:SetScript('OnClick',nil)
+-- frame:Hide();
+
+ButtonFrameTemplate_HideButtonBar(frame2);
+ButtonFrameTemplate_HidePortrait(frame2);
+ButtonFrameTemplate_HideAttic(frame2);
+
+do
+    local resetFrame = ZKYBOMB_SettingUI2;
+    resetFrame.messageLabel = resetFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
+    resetFrame.messageLabel:SetPoint("TOPLEFT", resetFrame, "TOPLEFT", 10, -35);
+    resetFrame.messageLabel:SetText('重置信息');
+    resetFrame.messageLabel:SetJustifyH("LEFT");
+    resetFrame.messageEdit = MakeEditBox(resetFrame, 3, 27, false);
+    resetFrame.messageEdit:SetPoint("LEFT", resetFrame.messageLabel, "RIGHT", 5, -1);
+    resetFrame.messageEdit:SetPoint("RIGHT", resetFrame, "RIGHT", -10, -1);
+    resetFrame.messageEdit:SetScript("OnTextChanged", function(self) 
+        ZkyBombDB.Times.Reset.Message = self:GetText()
+    end);
 end

@@ -185,6 +185,11 @@ function _addon:SettingUI_UpdateList()
     ZKYBOMB_SettingUI.totalEdit:SetText(_addon:GetTotalTimes());
 end
 
+--- Fill list from SV data
+function _addon:SettingUI_UpdateList2()
+    ZKYBOMB_SettingUI2.messageEdit:SetText(_addon:GetResetMessage());
+end
+
 
 --- Open the main list frame
 function _addon:SettingUI_OpenList()

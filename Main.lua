@@ -1,6 +1,7 @@
 local _addonName, _addon = ...;
 
 _addon.Main = "Main Lib"
+local SendChatMessage = SendChatMessage
 
 local L = _addon:GetLocalization();
 
@@ -88,13 +89,16 @@ function handlers.ADDON_LOADED(addonName)
     if ZkyBombDB.Times.PerRound == nil then ZkyBombDB.Times.PerRound = 5 end
     if ZkyBombDB.Times.Total == nil then ZkyBombDB.Times.Total = 0 end
     if ZkyBombDB.Channels == nil then ZkyBombDB.Channels = {} end
-    if ZkyBombDB.Times.ResetMessage == nil then ZkyBombDB.Times.ResetMessage = '' end
-    if ZkyBombDB.Times.IsSendResetMessage == nil then ZkyBombDB.Times.IsSendResetMessage = true end
+    if ZkyBombDB.Times.Reset == nil then ZkyBombDB.Times.Reset = {} end
+    if ZkyBombDB.Times.Reset.Message == nil then ZkyBombDB.Times.Reset.Message = '' end
+    if ZkyBombDB.Times.Reset.MessageSendType == nil then ZkyBombDB.Times.Reset.MessageSendType = 'YELL' end
+    if ZkyBombDB.Times.Reset.MessageIsSend == nil then ZkyBombDB.Times.Reset.MessageIsSend = true end
 
     -- _addon:SetupSettings();
 
     _addon:MainUI_UpdateList()
     _addon:SettingUI_UpdateList()
+    _addon:SettingUI_UpdateList2()
     -- UpdateAddonState();
 
     -- if ZkyBombDB.firstStart then
@@ -182,17 +186,26 @@ function _addon:GetJoinedChannels()
     return channels
 end
 
-function _addon:IsSendResetMessage()
-    local current = ZkyBombDB['Times']['IsSendResetMessage']
-    return current
-end
-
 function _addon:GetResetMessage()
-    local current = ZkyBombDB['Times']['ResetMessage']
+    return ZkyBombDB.Times.Reset.Message
+end
+
+function _addon:IsSendResetMessage()
+    local current = ZkyBombDB.Times.Reset.MessageIsSend
     return current
 end
 
-function _addon:ResetTimes()
-    ZkyBombDB['Times']['Current'] = 0;
-    SendChatMessage('计数已重置', 'PARTY')
+function _addon:GetResetMessageSendType()
+    return ZkyBombDB.Times.Reset.MessageSendType
+end
+
+
+function _addon:ResetCurrentTimes()
+    print('ResetCurrentTimes')
+    ZkyBombDB.Times.Current = 0;
+    print(_addon:IsSendResetMessage())
+    if _addon:IsSendResetMessage() then 
+        print(_addon:GetResetMessageSendType())
+        SendChatMessage(_addon:GetResetMessage(), _addon:GetResetMessageSendType())
+    end
 end

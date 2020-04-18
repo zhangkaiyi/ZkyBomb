@@ -113,6 +113,7 @@ mainframe:SetScript(
             print(_addon:GetTotalTimes())
             _addon:MainUI_OpenList()
             _addon:SettingUI_UpdateList()
+            _addon:SettingUI_UpdateList2()
             -- ZKYBOMB_SETTINGUI:Show()
         end
     end
