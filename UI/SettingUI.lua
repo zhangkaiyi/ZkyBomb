@@ -298,23 +298,15 @@ do
     end);
 end
 
-local svTable={}
-local SOUNDS = {
-    [""] = L["SOUND_NO_SOUND"],
-    ["sound/Doodad/LightHouseFogHorn.ogg"] = "Fog horn", 		                    -- 567094
-    ["sound/interface/itellmessage.ogg"] = "Whisper", 		                        -- 567421
-    ["sound/character/dwarf/dwarfmale/dwarfmaledeatha.ogg"] = "Dwarf", 		        -- 539885
-    ["sound/item/weapons/bow/arrowhitc.ogg"] = "Something", 	                    -- 567671
-    ["sound/item/weapons/bow/arrowhita.ogg"] = "Something2",                        -- 567672
-    ["sound/item/weapons/axe2h/m2haxehitmetalweaponcrit.ogg"] = "Hurts my ears"     -- 567653
+_addon.SENDTYPES = {
+    ["PARTY"] = "队伍",
+    ["YELL"] = "大喊",
+    ["GUILD"] = "公会",
+    ["RAID"] = "团队",
+    ["SAY"] = "说"
 };
-local SENDTYPES = {
-    ["队伍"] = "PARTY",
-    ["大喊"] = "YELL",
-    ["公会"] = "GUILD",
-    ["团队"] = "RAID",
-    ["说"] = "SAY"
-};
+local SENDTYPES = _addon.SENDTYPES;
+
 -- Hanlde dropdown refresh
 local function DropdownRefresh(self)
     print('DropdownRefresh')
@@ -330,18 +322,18 @@ end;
 local function DropdownOpen(self, level, menuList)
     -- print('DropdownOpen Start')
     local info = UIDropDownMenu_CreateInfo();
-    info.func = function(selfb, arg1, arg2)
-        print(arg2)
-        ZkyBombDB.Times.Reset.MessageSendType = arg2;
-        UIDropDownMenu_SetText(self, arg1);
+    info.func = function(selfb, k, v)
+        -- print(k)
+        ZkyBombDB.Times.Reset.MessageSendType = k;
+        UIDropDownMenu_SetText(self, v);
     end;
         local sendType = _addon:GetResetMessageSendType()
-        for k, v in pairs(self.GetListItems()) do
-        info.text = k;
-        info.arg1 = k;
-        info.arg2 = v;
+        for arg1, arg2 in pairs(self.GetListItems()) do
+        info.text = arg2;
+        info.arg1 = arg1;
+        info.arg2 = arg2;
         if sendType ~= nil then
-            info.checked = (v == sendType);
+            info.checked = (arg1 == sendType);
         else
             info.checked = false;
         end

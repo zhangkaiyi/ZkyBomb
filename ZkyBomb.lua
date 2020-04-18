@@ -335,7 +335,7 @@ function init:CreateOptionFrame()
         t:SetPoint('TOPLEFT', optionframe, 20, -20)
         t:SetAutoFocus(false)
         t:SetMaxLetters(150)
-        t:SetText(db:GetConfigOrDefault('Message'))
+        -- t:SetText(db:GetConfigOrDefault('Message'))
         t:SetScript(
             'OnTextChanged',
             function(self, userInput)
