@@ -188,6 +188,7 @@ end
 --- Fill list from SV data
 function _addon:SettingUI_UpdateList2()
     ZKYBOMB_SettingUI2.messageEdit:SetText(_addon:GetResetMessage());
+     UIDropDownMenu_SetText(ZKYBOMB_SettingUI2.sendTypeDropdown, _addon:GetResetMessageSendType())
 end
 
 

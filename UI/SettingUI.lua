@@ -343,7 +343,7 @@ local function DropdownOpen(self, level, menuList)
         if sendType ~= nil then
             info.checked = (v == sendType);
         else
-            info.checked = "PARTY";
+            info.checked = false;
         end
         UIDropDownMenu_AddButton(info);
     end
@@ -362,6 +362,6 @@ do
     resetFrame.sendTypeDropdown.RefreshState = DropdownRefresh;
     resetFrame.sendTypeDropdown.GetListItems = function() return SENDTYPES end;
     UIDropDownMenu_SetWidth(resetFrame.sendTypeDropdown, resetFrame.messageEdit:GetWidth()-10);
-    UIDropDownMenu_SetText(resetFrame.sendTypeDropdown,'队伍')
+    -- UIDropDownMenu_SetText(resetFrame.sendTypeDropdown,'队伍')
     UIDropDownMenu_Initialize(resetFrame.sendTypeDropdown, DropdownOpen)
 end
