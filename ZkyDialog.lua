@@ -3,16 +3,6 @@ local L = _addon:GetLocalization();
 
 _addon.dialog = "Dialog Lib"
 
-local frame = CreateFrame("Frame", "ZKYBOMB_Dialog", UIParent, "ButtonFrameTemplate");
-frame:SetPoint("CENTER", 0, 0);
-frame:SetWidth(200);
-frame:SetHeight(100);
-frame:Hide()
-
-ButtonFrameTemplate_HideButtonBar(frame);
-ButtonFrameTemplate_HidePortrait(frame)
-ButtonFrameTemplate_HideAttic(frame)
-
 local CreateFrame = CreateFrame
 local UIParent = UIParent
 
@@ -25,7 +15,7 @@ function me:CreateResetWindow()
 
 	theFrame:ClearAllPoints()
 	theFrame:SetPoint("CENTER",UIParent)
-	theFrame:SetHeight(78)
+	theFrame:SetHeight(100)
 	theFrame:SetWidth(200)
 
 	theFrame:SetBackdrop({
@@ -35,8 +25,8 @@ function me:CreateResetWindow()
 	})
 	theFrame:SetBackdropBorderColor(1.0, 0.0, 0.0)
 	theFrame:SetBackdropColor(24 / 255, 24 / 255, 24 / 255)
-	Recount.Colors:RegisterBorder("Other Windows","Title",theFrame)
-	Recount.Colors:RegisterBackground("Other Windows","Background",theFrame)
+	-- Recount.Colors:RegisterBorder("Other Windows","Title",theFrame)
+	-- Recount.Colors:RegisterBackground("Other Windows","Background",theFrame)
 
 	theFrame:EnableMouse(true)
 	theFrame:SetMovable(true)
@@ -44,7 +34,7 @@ function me:CreateResetWindow()
 
 	theFrame:SetScript("OnMouseDown", function(this, button)
 		if (((not this.isLocked) or (this.isLocked == 0)) and (button == "LeftButton")) then
-			Recount:SetWindowTop(this)
+			-- Recount:SetWindowTop(this)
 			this:StartMoving()
 			this.isMoving = true
 		end
@@ -56,7 +46,7 @@ function me:CreateResetWindow()
 		end
 	end)
 	theFrame:SetScript("OnShow", function(this)
-		Recount:SetWindowTop(this)
+		-- Recount:SetWindowTop(this)
 	end)
 	theFrame:SetScript("OnHide", function(this)
 		if (this.isMoving) then
@@ -68,30 +58,31 @@ function me:CreateResetWindow()
 	theFrame.Title = theFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
 	theFrame.Title:SetPoint("TOPLEFT", theFrame, "TOPLEFT", 6, -15)
 	theFrame.Title:SetTextColor(1.0, 1.0, 1.0, 1.0)
-	theFrame.Title:SetText(L["Reset Recount?"])
-	Recount:AddFontString(theFrame.Title)
+	theFrame.Title:SetText(L["Reset Times?"])
+	-- Recount:AddFontString(theFrame.Title)
 
-	--Recount.Colors:UnregisterItem(me.ResetFrame.Title)
-	Recount.Colors:RegisterFont("Other Windows", "Title Text", me.ResetFrame.Title)
+	-- Recount.Colors:UnregisterItem(me.ResetFrame.Title)
+	-- Recount.Colors:RegisterFont("Other Windows", "Title Text", me.ResetFrame.Title)
 
 	theFrame.Text = theFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
 	theFrame.Text:SetPoint("CENTER", theFrame, "CENTER", 0, -3)
 	theFrame.Text:SetTextColor(1.0, 1.0, 1.0)
-	theFrame.Text:SetText(L["Do you wish to reset the data?"])
-	Recount:AddFontString(theFrame.Text)
+	theFrame.Text:SetText(L["Do you wish to reset the times?"])
+	-- Recount:AddFontString(theFrame.Text)
 
 	theFrame.YesButton = CreateFrame("Button", nil, theFrame, "OptionsButtonTemplate")
 	theFrame.YesButton:SetWidth(90)
-	theFrame.YesButton:SetHeight(24)
+	theFrame.YesButton:SetHeight(28)
 	theFrame.YesButton:SetPoint("BOTTOMRIGHT", theFrame, "BOTTOM", -4, 4)
 	theFrame.YesButton:SetScript("OnClick", function()
-		Recount:ResetData()theFrame:Hide()
+		-- Recount:ResetData()
+		theFrame:Hide()
 	end)
 	theFrame.YesButton:SetText(L["Yes"])
 
 	theFrame.NoButton = CreateFrame("Button", nil, theFrame, "OptionsButtonTemplate")
 	theFrame.NoButton:SetWidth(90)
-	theFrame.NoButton:SetHeight(24)
+	theFrame.NoButton:SetHeight(28)
 	theFrame.NoButton:SetPoint("BOTTOMLEFT", theFrame, "BOTTOM", 4, 4)
 	theFrame.NoButton:SetScript("OnClick", function()
 		theFrame:Hide()
@@ -103,10 +94,10 @@ function me:CreateResetWindow()
 	theFrame:SetFrameStrata("DIALOG")
 
 	--Need to add it to our window ordering system
-	Recount:AddWindow(theFrame)
+	-- Recount:AddWindow(theFrame)
 end
 
-function Recount:ShowReset()
+function _addon:ShowReset()
 	if me.ResetFrame == nil then
 		me:CreateResetWindow()
 	end

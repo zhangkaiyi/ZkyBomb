@@ -112,7 +112,7 @@ frame:RegisterEvent("PLAYER_ENTERING_WORLD");
 function handlers.ZONE_CHANGED_NEW_AREA(event)
     print('ZONE_CHANGED_NEW_AREA')
     if IsInInstance() then
-        ZKYBOMB_Dialog:Show()
+        _addon:ShowReset()
     else
         ZKYBOMB_Dialog:Hide()
     end
@@ -178,4 +178,9 @@ function _addon:GetJoinedChannels()
         })
     end
     return channels
+end
+
+function _addon:ResetTimes()
+    ZkyBombDB['Times']['Current'] = 0;
+    SendChatMessage('计数已重置', msgType.Party)
 end

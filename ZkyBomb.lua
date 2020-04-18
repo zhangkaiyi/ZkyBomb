@@ -256,6 +256,27 @@ do
 end
 
 -------------------------------------
+-- 刷本计数重置
+-------------------------------------
+
+do
+    local countButton = CreateFrame('Button', nil, mainframe, 'OptionsButtonTemplate')
+    countButton:SetWidth(btnConfig.Height)
+    countButton:SetHeight(btnConfig.Height)
+    countButton:SetPoint('LEFT', btnConfig.Width + btnConfig.Height + btnConfig.Height + btnConfig.Height, 0)
+    countButton:SetText('■')
+    countButton:RegisterForClicks('LeftButtonUp', 'RightButtonUp')
+    countButton:SetScript(
+        'OnClick',
+        function(self, button)
+            _addon:ShowReset()
+            -- ZkyBombDB['Times']['Current'] = 0;
+            -- SendChatMessage('计数已重置', msgType.Party)
+        end
+    )
+end
+
+-------------------------------------
 -- 拖拽按钮
 -------------------------------------
 
