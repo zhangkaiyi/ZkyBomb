@@ -1,20 +1,20 @@
 <Bindings>
-  <Binding name="ZKYBOMB_TOGGLE" description="Toggle WowLua window" header="ZKYBOMB">
+  <Binding name="ZKYBOMB_TOGGLE" description="开关" header="ZKYBOMB">
 
   </Binding>
-  <Binding name="ZKYBOMB_WORLD_MESSAGE" description="Runs the current page in WowLua">
+  <Binding name="ZKYBOMB_WORLD_MESSAGE" description="世界频道发送信息">
       if(isDevelopment) then print('ZKYBOMB_WORLD_MESSAGE') end
       _bindings._addon:SendWorldMessage()
   </Binding>
-  <Binding name="ZKYBOMB_OTHER_MESSAGE" description="Saves the current page in WowLua">
+  <Binding name="ZKYBOMB_OTHER_MESSAGE" description="其他频道发送消息，如大喊、队伍">
       if(isDevelopment) then print('ZKYBOMB_OTHER_MESSAGE') end
       _bindings._addon:SendOtherMessage()
   </Binding>
-    <Binding name="ZKYBOMB_TIMES_INCREASE" description="Runs the current page in WowLua">
+    <Binding name="ZKYBOMB_TIMES_INCREASE" description="打本次数加一">
       if(isDevelopment) then print('ZKYBOMB_TIMES_INCREASE') end
       _bindings._addon:TimesIncrease()
   </Binding>
-  <Binding name="ZKYBOMB_TIMES_RESET" description="Saves the current page in WowLua">
+  <Binding name="ZKYBOMB_TIMES_RESET" description="打本次数重置">
       if(isDevelopment) then print('ZKYBOMB_TIMES_RESET') end
       _bindings._addon:TimesReset()
   </Binding>

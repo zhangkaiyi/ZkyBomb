@@ -117,10 +117,13 @@ frame:RegisterEvent("PLAYER_ENTERING_WORLD");
 
 function handlers.ZONE_CHANGED_NEW_AREA(event)
     print('ZONE_CHANGED_NEW_AREA')
-    if IsInInstance() then
+    local currentTimes = _addon:GetCurrentTimes()
+    local timesPerRound = _addon:GetTimesPerRound()
+    local isFinished = (currentTimes >= timesPerRound)
+    if IsInInstance() and isFinished then
         _addon:ShowReset()
     else
-        ZKYBOMB_Dialog:Hide()
+        _addon:HideReset()
     end
 end
 
@@ -136,7 +139,7 @@ SLASH_ZKYBOMB1 = "/zb";
 SlashCmdList["ZKYBOMB"] = function(arg) _addon:MainUI_OpenList(); end;
 
 BINDING_HEADER_ZKYBOMB = "飙车助手"
-BINDING_NAME_ZKYBOMB_TOGGLE = "开启 / 关闭"
+BINDING_NAME_ZKYBOMB_TOGGLE = "开/关"
 BINDING_NAME_ZKYBOMB_WORLD_MESSAGE = "世界喊话"
 BINDING_NAME_ZKYBOMB_OTHER_MESSAGE = "其他喊话"
 BINDING_NAME_ZKYBOMB_TIMES_INCREASE = "计数增加"

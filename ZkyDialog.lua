@@ -105,3 +105,11 @@ function _addon:ShowReset()
 
 	me.ResetFrame:Show()
 end
+
+function _addon:HideReset()
+	if me.ResetFrame == nil then
+		me:CreateResetWindow()
+	end
+
+	me.ResetFrame:Hide()
+end
