@@ -139,6 +139,8 @@ BINDING_HEADER_ZKYBOMB = "飙车助手"
 BINDING_NAME_ZKYBOMB_TOGGLE = "开启 / 关闭"
 BINDING_NAME_ZKYBOMB_WORLD_MESSAGE = "世界喊话"
 BINDING_NAME_ZKYBOMB_OTHER_MESSAGE = "其他喊话"
+BINDING_NAME_ZKYBOMB_TIMES_INCREASE = "计数增加"
+BINDING_NAME_ZKYBOMB_TIMES_RESET = "计数重置"
 ------------------------------------------------
 -- Helper
 ------------------------------------------------
@@ -203,7 +205,6 @@ function _addon:GetResetMessageSendType()
     return ZkyBombDB.Times.Reset.MessageSendType
 end
 
-
 function _addon:ResetCurrentTimes()
     print('ResetCurrentTimes')
     ZkyBombDB.Times.Current = 0;
@@ -213,3 +214,42 @@ function _addon:ResetCurrentTimes()
         SendChatMessage(_addon:GetResetMessage(), _addon:GetResetMessageSendType())
     end
 end
+
+function _addon:SendWorldMessage()
+    local channels = _addon:GetDbChannels()
+                local sortedChannels = {}
+                for k, v in pairs(channels) do
+                    if v.active then
+                    table.insert(sortedChannels, v.id)
+                    end
+                end
+                table.sort(sortedChannels)
+                for i=1,#sortedChannels,1 do
+                        SendChannelMessage(_addon:GetActiveMessage(), sortedChannels[i])
+                    end
+end
+
+function _addon:SendOtherMessage()
+    SendChatMessage(_addon:GetActiveMessage(), "YELL")
+end
+
+function _addon:TimesIncrease()
+    local timePerRound = _addon:GetTimesPerRound()
+    local current = _addon:GetCurrentTimes()
+    local total = _addon:GetTotalTimes()
+    current = current + 1
+    total = total +1
+    ZkyBombDB['Times']['Current'] = current;
+    ZkyBombDB['Times']['Total'] = total;
+    SendChatMessage(timePerRound .. '-------' .. current, 'PARTY')
+end
+
+function _addon:TimesReset()
+    ZkyBombDB.Times.Current = 0;
+    if _addon:IsSendResetMessage() then 
+        SendChatMessage(_addon:GetResetMessage(), _addon:GetResetMessageSendType())
+    end
+end
+
+_bindings = {}
+_bindings._addon = _addon

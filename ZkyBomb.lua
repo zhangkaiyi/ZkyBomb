@@ -182,17 +182,7 @@ do
         function(self, button)
             if button == 'RightButton' then
             else
-                local channels = _addon:GetDbChannels()
-                local sortedChannels = {}
-                for k, v in pairs(channels) do
-                    if v.active then
-                    table.insert(sortedChannels, v.id)
-                    end
-                end
-                table.sort(sortedChannels)
-                for i=1,#sortedChannels,1 do
-                        SendChannelMessage(_addon:GetActiveMessage(), sortedChannels[i])
-                    end
+                _addon:SendWorldMessage()
             end
         end
     )
@@ -219,7 +209,7 @@ do
         function(self, button)
             if button == 'RightButton' then
             else
-                SendChatMessage(_addon:GetActiveMessage(), msgType.Yell)
+                _addon:SendOtherMessage()
             end
         end
     )
@@ -240,17 +230,9 @@ do
         'OnClick',
         function(self, button)
             if button == 'RightButton' then
-                ZkyBombDB['Times']['Current'] = 0;
-                SendChatMessage('计数已重置', msgType.Party)
+                _addon:TimesReset()
             else
-                local timePerRound = _addon:GetTimesPerRound()
-                local current = _addon:GetCurrentTimes()
-                local total = _addon:GetTotalTimes()
-                current = current + 1
-                total = total +1
-                ZkyBombDB['Times']['Current'] = current;
-                ZkyBombDB['Times']['Total'] = total;
-                SendChatMessage(timePerRound .. '-------' .. current, msgType.Party)
+                _addon:TimesIncrease()
             end
         end
     )
@@ -271,8 +253,6 @@ do
         'OnClick',
         function(self, button)
             _addon:ShowReset()
-            -- ZkyBombDB['Times']['Current'] = 0;
-            -- SendChatMessage('计数已重置', msgType.Party)
         end
     )
 end
