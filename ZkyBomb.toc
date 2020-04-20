@@ -2,9 +2,6 @@
 ## Title: |CFFFF8000Zky|R Bomb
 ## SavedVariables: ZkyBombDB
 
-ZkyUtil.lua
-ZkyLib.lua
-
 # UI/Templates.xml
 # ZkySettingsCreator.lua
 
@@ -12,6 +9,9 @@ i18n/loc.lua
 i18n/enUS.lua
 i18n/deDE.lua
 i18n/zhCN.lua
+
+ZkyUtil.lua
+ZkyLib.lua
 
 main.lua
 
