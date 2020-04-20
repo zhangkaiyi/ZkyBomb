@@ -288,7 +288,7 @@ do
     local resetFrame = ZKYBOMB_SettingUI2;
     resetFrame.messageLabel = resetFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
     resetFrame.messageLabel:SetPoint("TOPLEFT", resetFrame, "TOPLEFT", 10, -35);
-    resetFrame.messageLabel:SetText('重置信息');
+    resetFrame.messageLabel:SetText('重置通知');
     resetFrame.messageLabel:SetJustifyH("LEFT");
     resetFrame.messageEdit = MakeEditBox(resetFrame, 100, 27, false);
     resetFrame.messageEdit:SetPoint("LEFT", resetFrame.messageLabel, "RIGHT", 5, -1);
