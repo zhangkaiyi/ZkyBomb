@@ -37,7 +37,10 @@ end)()
 local function SetTooltip(element, tooltip)
     element:SetScript("OnEnter", function(self) 
         GameTooltip:SetOwner(self, "ANCHOR_TOPLEFT");
-        GameTooltip:SetText(tooltip, 1, 0.9, 0.9, 1, true);
+        GameTooltip:SetText('次数', 1, 0.9, 0.9, 1, true);
+        GameTooltip:AddLine('左键：递增', 1, 0.9, 0.9, 1, true);
+        GameTooltip:AddLine('右键：重置', 1, 0.9, 0.9, 1, true);
+        -- GameTooltip:Show()
     end);
 
     element:SetScript("OnLeave", GameTooltip_Hide);
@@ -193,29 +196,30 @@ do
         'OnClick',
         function(self, button)
             if button == 'RightButton' then
-                _addon:TimesReset()
+                _addon:ShowReset()
             else
                 _addon:TimesIncrease()
             end
         end
     )
+    SetTooltip(countButton, '左键：增加计数\r\n右键：重置计数')
 end
 
--------------------------------------
--- 刷本计数重置
--------------------------------------
+-- -------------------------------------
+-- -- 刷本计数重置
+-- -------------------------------------
 
-do
-    local countButton = CreateFrame('Button', nil, mainframe, 'OptionsButtonTemplate')
-    countButton:SetWidth(btnConfig.Height)
-    countButton:SetHeight(btnConfig.Height)
-    countButton:SetPoint('LEFT', btnConfig.Width + btnConfig.Height + btnConfig.Height + btnConfig.Height, 0)
-    countButton:SetText('■')
-    countButton:RegisterForClicks('LeftButtonUp', 'RightButtonUp')
-    countButton:SetScript(
-        'OnClick',
-        function(self, button)
-            _addon:ShowReset()
-        end
-    )
-end
+-- do
+--     local countButton = CreateFrame('Button', nil, mainframe, 'OptionsButtonTemplate')
+--     countButton:SetWidth(btnConfig.Height)
+--     countButton:SetHeight(btnConfig.Height)
+--     countButton:SetPoint('LEFT', btnConfig.Width + btnConfig.Height + btnConfig.Height + btnConfig.Height, 0)
+--     countButton:SetText('■')
+--     countButton:RegisterForClicks('LeftButtonUp', 'RightButtonUp')
+--     countButton:SetScript(
+--         'OnClick',
+--         function(self, button)
+--             _addon:ShowReset()
+--         end
+--     )
+-- end
