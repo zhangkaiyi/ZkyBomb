@@ -2,25 +2,23 @@
 ## Title: |CFFFF8000Zky|R Bomb
 ## SavedVariables: ZkyBombDB
 
-ZkyInitial.lua
+ZkyUtil.lua
+ZkyLib.lua
 
-UI/Templates.xml
-ZkySettingsCreator.lua
+# UI/Templates.xml
+# ZkySettingsCreator.lua
 
 i18n/loc.lua
 i18n/enUS.lua
 i18n/deDE.lua
 i18n/zhCN.lua
 
-ZkyLib.lua
-ZkyDialog.lua
-Main.lua
-
-ZkyBomb.lua
-ZkyBombOptions.lua
+main.lua
 
 UI/MainUI.lua
-UI/MainUI_functions.lua
+UI/ResetUI.lua
 UI/SettingUI.lua
 UI/SettingUI_functions.lua
+UI/SettingUI2.lua
+UI/SettingUI2_functions.lua
 UI/minimapButton.lua

@@ -218,6 +218,10 @@ function _addon:ResetCurrentTimes()
     end
 end
 
+function _addon:SendChannelMessage(msg, channelId)
+    SendChatMessage(msg, 'channel', '', channelId)
+end
+
 function _addon:SendWorldMessage()
     local channels = _addon:GetDbChannels()
                 local sortedChannels = {}
@@ -228,7 +232,7 @@ function _addon:SendWorldMessage()
                 end
                 table.sort(sortedChannels)
                 for i=1,#sortedChannels,1 do
-                        SendChannelMessage(_addon:GetActiveMessage(), sortedChannels[i])
+                    _addon:SendChannelMessage(_addon:GetActiveMessage(), sortedChannels[i])
                     end
 end
 

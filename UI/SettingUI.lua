@@ -7,63 +7,71 @@ local MIN_ITEMS = 9;
 local HEIGHT_NO_CONTENT = 71;
 
 -- Main frame
-local frame = CreateFrame("Frame", "ZKYBOMB_SettingUI", ZKYBOMB_MainUI, "ButtonFrameTemplate");
-frame:SetPoint('TOPLEFT', ZKYBOMB_MainUI, 'TOPRIGHT', 5, 0)
-frame:SetPoint('BOTTOMLEFT', ZKYBOMB_MainUI, 'BOTTOMRIGHT', 5, 180)
-frame:SetWidth(320);
-frame:SetHeight(MIN_ITEMS*LIST_ITEM_HEIGHT + HEIGHT_NO_CONTENT);
+local frame = CreateFrame("Frame", "ZKYBOMB_MainUI", UIParent, "ButtonFrameTemplate");
+frame:SetPoint("CENTER", 0, 0);
+frame:SetWidth(500);
+frame:SetHeight(MAX_ITEMS*LIST_ITEM_HEIGHT + HEIGHT_NO_CONTENT);
+-- frame:SetWidth(275);
+-- frame:SetHeight(MIN_ITEMS*LIST_ITEM_HEIGHT + HEIGHT_NO_CONTENT);
 -- frame:SetResizable(true);
 frame:SetClampedToScreen(true);
 -- frame:SetMaxResize(600, MAX_ITEMS*LIST_ITEM_HEIGHT + HEIGHT_NO_CONTENT);
 -- frame:SetMinResize(250, MIN_ITEMS*LIST_ITEM_HEIGHT + HEIGHT_NO_CONTENT);
--- frame:SetMovable(true);
+frame:SetMovable(true);
 frame:EnableMouse(true);
-frame.TitleText:SetText('频道与次数');
--- frame.portrait:SetTexture([[Interface\AddOns\ZkyBomb\img\logo]]);
--- frame.CloseButton:SetScript('OnClick',nil)
-frame.CloseButton:Hide()
-frame.TopRightCorner:SetWidth(18);
-frame.TopRightCorner:SetTexCoord(0.75, 0.89062500, 0.00781250, 0.26562500);
-frame.TitleBg:SetPoint("TOPLEFT",2,-3)
-frame.TitleBg:SetPoint("TOPRIGHT",-2,-3)
--- ZKYBOMB_SettingUICloseButton:SetScript('OnClick',nil)
--- frame:Hide();
+frame.TitleText:SetText('飙车助手');
+frame.portrait:SetTexture([[Interface\AddOns\ZkyBomb\img\logo]]);
+frame:Hide();
 
 ButtonFrameTemplate_HideButtonBar(frame);
-ButtonFrameTemplate_HidePortrait(frame)
 
+-- Add drag area
+frame.dragBar = CreateFrame("Frame", nil, frame);
+frame.dragBar:SetPoint("TOPLEFT");
+frame.dragBar:SetPoint("BOTTOMRIGHT", frame.CloseButton, "TOPLEFT", 0, -40);
+frame.dragBar:SetScript("OnMouseDown", function(self)
+    self:GetParent():StartMoving();
+end);
+frame.dragBar:SetScript("OnMouseUp", function(self)
+    self:GetParent():StopMovingOrSizing();
+end);
 
 -- Delete button for delete all function
-    frame.deleteBtn = CreateFrame("Button", nil, frame);
-    frame.deleteBtn:SetSize(18, 18);
-    frame.deleteBtn:SetPoint("TOPRIGHT", -15, -35);
-    frame.deleteBtn:SetNormalTexture([[Interface\AddOns\ZkyBomb\img\trash]]);
-    frame.deleteBtn:SetHighlightTexture([[Interface\AddOns\ZkyBomb\img\trash]]);
-    frame.deleteBtn:Hide()
-    
-    -- Add button for switching to add content
-    frame.addBtn = CreateFrame("Button", nil, frame);
-    frame.addBtn:SetSize(15, 15);
-    frame.addBtn:SetPoint("RIGHT", frame.deleteBtn, "LEFT", -15, 1);
-    frame.addBtn:SetNormalTexture([[Interface\AddOns\ZkyBomb\img\iplus]]);
-    frame.addBtn:SetHighlightTexture([[Interface\AddOns\ZkyBomb\img\iplus]]);
-    frame.addBtn:Hide()
-    
-    -- Add button for toggling addon on/off
-    frame.toggleBtn = CreateFrame("Button", nil, frame);
-    frame.toggleBtn:SetSize(15, 15);
-    frame.toggleBtn:SetPoint("RIGHT", frame.addBtn, "LEFT", -15, 0);
-    frame.toggleBtn:SetNormalTexture([[Interface\AddOns\ZkyBomb\img\on]]);
-    frame.toggleBtn:SetHighlightTexture([[Interface\AddOns\ZkyBomb\img\on]]);
-    frame.toggleBtn:Hide()
-    
-    -- Settings button
-    frame.settingsBtn = CreateFrame("Button", nil, frame);
-    frame.settingsBtn:SetSize(18, 18);
-    frame.settingsBtn:SetPoint("TOPLEFT", 70, -35);
-    frame.settingsBtn:SetNormalTexture([[interface/scenarios/scenarioicon-interact.blp]]);
-    frame.settingsBtn:SetHighlightTexture([[interface/scenarios/scenarioicon-interact.blp]]);
-    frame.settingsBtn:Hide()
+frame.deleteBtn = CreateFrame("Button", nil, frame);
+frame.deleteBtn:SetSize(18, 18);
+frame.deleteBtn:SetPoint("TOPRIGHT", -15, -35);
+frame.deleteBtn:SetNormalTexture([[Interface\AddOns\ZkyBomb\img\trash]]);
+frame.deleteBtn:SetHighlightTexture([[Interface\AddOns\ZkyBomb\img\trash]]);
+
+-- Add button for switching to add content
+frame.addBtn = CreateFrame("Button", nil, frame);
+frame.addBtn:SetSize(15, 15);
+frame.addBtn:SetPoint("RIGHT", frame.deleteBtn, "LEFT", -15, 1);
+frame.addBtn:SetNormalTexture([[Interface\AddOns\ZkyBomb\img\iplus]]);
+frame.addBtn:SetHighlightTexture([[Interface\AddOns\ZkyBomb\img\iplus]]);
+
+-- Add button for toggling addon on/off
+frame.toggleBtn = CreateFrame("Button", nil, frame);
+frame.toggleBtn:SetSize(15, 15);
+frame.toggleBtn:SetPoint("RIGHT", frame.addBtn, "LEFT", -15, 0);
+frame.toggleBtn:SetNormalTexture([[Interface\AddOns\ZkyBomb\img\on]]);
+frame.toggleBtn:SetHighlightTexture([[Interface\AddOns\ZkyBomb\img\on]]);
+frame.toggleBtn:Hide()
+
+-- Settings button
+frame.settingsBtn = CreateFrame("Button", nil, frame);
+frame.settingsBtn:SetSize(18, 18);
+frame.settingsBtn:SetPoint("TOPLEFT", 70, -35);
+frame.settingsBtn:SetNormalTexture([[interface/scenarios/scenarioicon-interact.blp]]);
+frame.settingsBtn:SetHighlightTexture([[interface/scenarios/scenarioicon-interact.blp]]);
+
+-- Resize knob
+frame.resizeBtn = CreateFrame("Button", nil, frame);
+frame.resizeBtn:SetSize(64, 18);
+frame.resizeBtn:SetPoint("TOPRIGHT", frame, "BOTTOMRIGHT", -3, 1);
+frame.resizeBtn:SetNormalTexture([[Interface\AddOns\ZkyBomb\img\grabber_s]]);
+frame.resizeBtn:SetHighlightTexture([[Interface\AddOns\ZkyBomb\img\grabber]]);
+
 
 ----------------------------------------------------------------------------------------------------------------
 -- Content frames
@@ -97,6 +105,21 @@ frame.scrollFrame.ScrollBarMiddle:SetSize(31, 60);
 frame.scrollFrame.ScrollBarMiddle:SetTexCoord(0, 0.484375, 0.75, 1);
 
 frame.scrollFrame:SetClipsChildren(true);
+
+--- Make a basic content frame
+-- @param name The object name
+-- @param title The title to show
+local function MakeSubFrame(title)
+    local sframe = CreateFrame("Frame", nil, frame.Inset);
+    sframe:SetPoint("TOPLEFT", 0, 0);
+    sframe:SetPoint("BOTTOMRIGHT", 0, 0);
+    sframe:Hide();
+    sframe.title = sframe:CreateFontString(nil, "OVERLAY", "GameFontNormalMed2");
+    sframe.title:SetPoint("TOPLEFT", 20, -15);
+    sframe.title:SetPoint("TOPRIGHT", -20, -15);
+    sframe.title:SetText(title);
+    return sframe;
+end
 
 --- Make an editbox
 -- @param parent The parent frame
@@ -133,50 +156,74 @@ local function MakeEditBox(parent, maxLen, height, isMultiline)
     return edit;
 end
 
--- Times Management
+-- Subframe with add form
 do
-    local timesFrame = ZKYBOMB_SettingUI;
-    timesFrame.currentLabel = timesFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
-    timesFrame.currentLabel:SetPoint("TOPLEFT", timesFrame, "TOPLEFT", 10, -35);
-    -- timesFrame.currentLabel:SetWidth(40)
-    timesFrame.currentLabel:SetText(L["UI_TIMES_CURRENT"]);
-    timesFrame.currentLabel:SetJustifyH("LEFT");
-    timesFrame.currentEdit = MakeEditBox(timesFrame, 3, 27, false);
-    timesFrame.currentEdit:SetPoint("LEFT", timesFrame.currentLabel, "RIGHT", 5, -1);
-    timesFrame.currentEdit:SetWidth(40);
-    timesFrame.currentEdit:SetNumeric(true)
-    timesFrame.currentEdit:SetScript('OnChar', mustnumber)
-    -- timesFrame.currentEdit:SetText(_addon:GetActiveMessage());
+    local addFrame = MakeSubFrame(L["UI_ADDFORM_TITLE"]);
+    addFrame.searchLabel = addFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
+    addFrame.searchLabel:SetPoint("TOPLEFT", addFrame.title, "BOTTOMLEFT", 0, -16);
+    addFrame.searchLabel:SetPoint("TOPRIGHT", addFrame.title, "BOTTOMRIGHT", 0, -16);
+    addFrame.searchLabel:SetText(L["UI_ADDFORM_NAME"]);
+    addFrame.searchLabel:SetJustifyH("LEFT");
+    addFrame.searchEdit = MakeEditBox(addFrame, 40, 27, true);
+    addFrame.searchEdit:SetPoint("TOPLEFT", addFrame.searchLabel, "BOTTOMLEFT", 0, -4);
+    addFrame.searchEdit:SetPoint("TOPRIGHT", addFrame.searchLabel, "BOTTOMRIGHT", 0, -4);
+    addFrame.okbutton = CreateFrame("Button", nil, addFrame, "OptionsButtonTemplate");
+    addFrame.okbutton:SetText(L["UI_ADDFORM_ADD_BUTTON"]);
+    addFrame.okbutton:SetPoint("TOPLEFT", addFrame.searchEdit, "BOTTOMLEFT", 0, -10);
+    addFrame.okbutton:SetWidth(80);
+    addFrame.okbutton:SetHeight(30);
+    addFrame.backbutton = CreateFrame("Button", nil, addFrame, "OptionsButtonTemplate");
+    addFrame.backbutton:SetText(L["UI_BACK"]);
+    addFrame.backbutton:SetPoint("TOPRIGHT", addFrame.searchEdit, "BOTTOMRIGHT", 0, -10);
+    addFrame.backbutton:SetWidth(80);
+    addFrame.backbutton:SetHeight(30);
+    frame.addFrame = addFrame;
 end
 
+-- Subframe with edit form
 do
-    local timesFrame = ZKYBOMB_SettingUI;
-    timesFrame.perRoundLabel = timesFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
-    timesFrame.perRoundLabel:SetPoint("LEFT", timesFrame.currentEdit, "RIGHT", 10, 1);
-    -- timesFrame.currentLabel:SetWidth(40)
-    timesFrame.perRoundLabel:SetText(L["UI_TIMES_PERROUND"]);
-    timesFrame.perRoundLabel:SetJustifyH("LEFT");
-    timesFrame.perRoundEdit = MakeEditBox(timesFrame, 3, 27, false);
-    timesFrame.perRoundEdit:SetPoint("LEFT", timesFrame.perRoundLabel, "RIGHT", 5, -1);
-    timesFrame.perRoundEdit:SetWidth(40);
-    timesFrame.perRoundEdit:SetNumeric(true)
-    timesFrame.currentEdit:SetScript('OnChar', mustnumber)
-    -- timesFrame.currentEdit:SetText(_addon:GetActiveMessage());
+    local editFrame = MakeSubFrame(L["UI_EDITFORM_TITLE"]);
+    editFrame.searchLabel = editFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
+    editFrame.searchLabel:SetPoint("TOPLEFT", editFrame.title, "BOTTOMLEFT", 0, -16);
+    editFrame.searchLabel:SetPoint("TOPRIGHT", editFrame.title, "BOTTOMRIGHT", 0, -16);
+    editFrame.searchLabel:SetText(L["UI_ADDFORM_NAME"]);
+    editFrame.searchLabel:SetJustifyH("LEFT");
+    editFrame.searchEdit = MakeEditBox(editFrame, 40, 27, true);
+    editFrame.searchEdit:SetPoint("TOPLEFT", editFrame.searchLabel, "BOTTOMLEFT", 0, -4);
+    editFrame.searchEdit:SetPoint("TOPRIGHT", editFrame.searchLabel, "BOTTOMRIGHT", 0, -4);
+    editFrame.okbutton = CreateFrame("Button", nil, editFrame, "OptionsButtonTemplate");
+    editFrame.okbutton:SetText(L["UI_EDITFORM_CONFIRM_BUTTON"]);
+    editFrame.okbutton:SetPoint("TOPLEFT", editFrame.searchEdit, "BOTTOMLEFT", 0, -10);
+    editFrame.okbutton:SetWidth(80);
+    editFrame.okbutton:SetHeight(30);
+    editFrame.backbutton = CreateFrame("Button", nil, editFrame, "OptionsButtonTemplate");
+    editFrame.backbutton:SetText(L["UI_BACK"]);
+    editFrame.backbutton:SetPoint("TOPRIGHT", editFrame.searchEdit, "BOTTOMRIGHT", 0, -10);
+    editFrame.backbutton:SetWidth(80);
+    editFrame.backbutton:SetHeight(30);
+    frame.editFrame = editFrame;
 end
 
+-- Subframe with delete all form
 do
-    local timesFrame = ZKYBOMB_SettingUI;
-    timesFrame.totalLabel = timesFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
-    timesFrame.totalLabel:SetPoint("LEFT", timesFrame.perRoundEdit, "RIGHT", 10, 1);
-    -- timesFrame.currentLabel:SetWidth(40)
-    timesFrame.totalLabel:SetText(L["UI_TIMES_TAOTAL"]);
-    timesFrame.totalLabel:SetJustifyH("LEFT");
-    timesFrame.totalEdit = MakeEditBox(timesFrame, 3, 27, false);
-    timesFrame.totalEdit:SetPoint("LEFT", timesFrame.totalLabel, "RIGHT", 5, -1);
-    timesFrame.totalEdit:SetWidth(40);
-    timesFrame.totalEdit:SetNumeric(true)
-    timesFrame.totalEdit:SetScript('OnChar', mustnumber)
-    -- timesFrame.currentEdit:SetText(_addon:GetActiveMessage());
+    local deleteAllFrame = MakeSubFrame(L["UI_RMALL_TITLE"]);
+    deleteAllFrame.desc = deleteAllFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
+    deleteAllFrame.desc:SetPoint("TOPLEFT", deleteAllFrame.title, "BOTTOMLEFT", 0, -16);
+    deleteAllFrame.desc:SetPoint("TOPRIGHT", deleteAllFrame.title, "BOTTOMRIGHT", 0, -16);
+    deleteAllFrame.desc:SetText(L["UI_RMALL_DESC"]);
+    deleteAllFrame.desc:SetJustifyH("LEFT");
+    deleteAllFrame.desc:SetJustifyV("CENTER");
+    deleteAllFrame.okbutton = CreateFrame("Button", nil, deleteAllFrame, "OptionsButtonTemplate");
+    deleteAllFrame.okbutton:SetText(L["UI_RMALL_REMOVE"]);
+    deleteAllFrame.okbutton:SetPoint("TOPLEFT", deleteAllFrame.desc, "BOTTOMLEFT", 0, -10);
+    deleteAllFrame.okbutton:SetWidth(80);
+    deleteAllFrame.okbutton:SetHeight(30);
+    deleteAllFrame.backbutton = CreateFrame("Button", nil, deleteAllFrame, "OptionsButtonTemplate");
+    deleteAllFrame.backbutton:SetText(L["UI_CANCEL"]);
+    deleteAllFrame.backbutton:SetPoint("TOPRIGHT", deleteAllFrame.desc, "BOTTOMRIGHT", 0, -10);
+    deleteAllFrame.backbutton:SetWidth(80);
+    deleteAllFrame.backbutton:SetHeight(30);
+    frame.deleteAllFrame = deleteAllFrame;
 end
 
 ----------------------------------------------------------------------------------------------------------------
@@ -187,7 +234,7 @@ frame.scrollFrame.items = {};
 
 --- Toggle the list item on/off
 local function ToggleItem(self)
-    if _addon:ToggleChannel(self:GetParent().searchString:GetText()) then
+    if _addon:ToggleEntry(self:GetParent().searchString:GetText()) then
         self:SetNormalTexture([[Interface\AddOns\ZkyBomb\img\on]]);
         self:SetHighlightTexture([[Interface\AddOns\ZkyBomb\img\on]]);
         self:GetParent():SetBackdropColor(0.2,0.2,0.2,0.8);
@@ -227,12 +274,11 @@ for i = 1, MAX_ITEMS, 1 do
 	item.delb:SetNormalTexture([[Interface\AddOns\ZkyBomb\img\iclose]]);
 	item.delb:SetHighlightTexture([[Interface\AddOns\ZkyBomb\img\iclose]]);
     item.delb:SetScript("OnClick", RemoveItem);
-    item.delb:Hide()
 
     item.disb = CreateFrame("Button", nil, item);
 	item.disb:SetWidth(12);
 	item.disb:SetHeight(12);
-	item.disb:SetPoint("RIGHT", item, "RIGHT", -10, 0);
+	item.disb:SetPoint("RIGHT", item.delb, "LEFT", -10, 0);
 	item.disb:SetNormalTexture([[Interface\AddOns\ZkyBomb\img\on]]);
 	item.disb:SetHighlightTexture([[Interface\AddOns\ZkyBomb\img\on]]);
     item.disb:SetScript("OnClick", ToggleItem);
@@ -248,112 +294,46 @@ for i = 1, MAX_ITEMS, 1 do
         frame.editFrame.searchEdit:SetText(item.searchString:GetText())
         frame:ShowContent("EDIT")
     end)
-    item.edit:Hide()
 ---- hk }
     
 	frame.scrollFrame.items[i] = item;
 end
 
 
--- Main frame
-local frame2 = CreateFrame("Frame", "ZKYBOMB_SettingUI2", frame, "ButtonFrameTemplate");
-frame2:SetPoint('TOP', frame, 'BOTTOM', 0, -5)
-frame2:SetPoint('LEFT', frame, 'LEFT', 0, 0)
-frame2:SetPoint('RIGHT', frame, 'RIGHT', 0, 0)
-frame2:SetPoint('BOTTOM', ZKYBOMB_MainUI, 'BOTTOM', 0, 0)
--- frame2:SetWidth(320);
--- frame2:SetHeight(MIN_ITEMS*LIST_ITEM_HEIGHT + HEIGHT_NO_CONTENT);
--- frame:SetResizable(true);
-frame2:SetClampedToScreen(true);
--- frame:SetMaxResize(600, MAX_ITEMS*LIST_ITEM_HEIGHT + HEIGHT_NO_CONTENT);
--- frame:SetMinResize(250, MIN_ITEMS*LIST_ITEM_HEIGHT + HEIGHT_NO_CONTENT);
--- frame:SetMovable(true);
-frame2:EnableMouse(true);
-frame2.TitleText:SetText('其他设置');
--- frame2.portrait:SetTexture([[Interface\AddOns\ZkyBomb\img\logo]]);
--- frame.CloseButton:SetScript('OnClick',nil)
-frame2.CloseButton:Hide()
-frame2.TopRightCorner:SetWidth(18);
-frame2.TopRightCorner:SetTexCoord(0.75, 0.89062500, 0.00781250, 0.26562500);
-frame2.TitleBg:SetPoint("TOPLEFT",2,-3)
-frame2.TitleBg:SetPoint("TOPRIGHT",-2,-3)
--- ZKYBOMB_SettingUICloseButton:SetScript('OnClick',nil)
--- frame:Hide();
+----------------------------------------------------------------------------------------------------------------
+-- Frame functions
+----------------------------------------------------------------------------------------------------------------
 
-ButtonFrameTemplate_HideButtonBar(frame2);
-ButtonFrameTemplate_HidePortrait(frame2);
-ButtonFrameTemplate_HideAttic(frame2);
-
-do
-    local resetFrame = ZKYBOMB_SettingUI2;
-    resetFrame.messageLabel = resetFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
-    resetFrame.messageLabel:SetPoint("TOPLEFT", resetFrame, "TOPLEFT", 10, -35);
-    resetFrame.messageLabel:SetText('重置通知');
-    resetFrame.messageLabel:SetJustifyH("LEFT");
-    resetFrame.messageEdit = MakeEditBox(resetFrame, 100, 27, false);
-    resetFrame.messageEdit:SetPoint("LEFT", resetFrame.messageLabel, "RIGHT", 5, -1);
-    resetFrame.messageEdit:SetPoint("RIGHT", resetFrame, "RIGHT", -10, -1);
-    resetFrame.messageEdit:SetScript("OnTextChanged", function(self) 
-        ZkyBombDB.Times.Reset.Message = self:GetText()
-    end);
-end
-
-_addon.SENDTYPES = {
-    ["PARTY"] = "队伍",
-    ["YELL"] = "大喊",
-    ["GUILD"] = "公会",
-    ["RAID"] = "团队",
-    ["SAY"] = "说"
-};
-local SENDTYPES = _addon.SENDTYPES;
-
--- Hanlde dropdown refresh
-local function DropdownRefresh(self)
-    print('DropdownRefresh')
-    local optionName = "NOT SET!";
-    for k,v in pairs(self.GetListItems()) do
-        if k == svTable[self.settingName] then
-            optionName = v;
-            break;
-        end
+--- Switch displayed content
+-- @param name Which frame to show, "LIST", "ADD", "RM" , "RMALL", "RMOTHER", defaults to "LIST"
+function frame:ShowContent(name)
+    if name == "ADD" then
+        self.deleteAllFrame:Hide();
+        self.scrollFrame:Hide();
+        self.addFrame:Show();
+        self.editFrame:Hide();
+        return;
     end
-    UIDropDownMenu_SetText(self, optionName);
-end;
-local function DropdownOpen(self, level, menuList)
-    -- print('DropdownOpen Start')
-    local info = UIDropDownMenu_CreateInfo();
-    info.func = function(selfb, k, v)
-        -- print(k)
-        ZkyBombDB.Times.Reset.MessageSendType = k;
-        UIDropDownMenu_SetText(self, v);
-    end;
-        local sendType = _addon:GetResetMessageSendType()
-        for arg1, arg2 in pairs(self.GetListItems()) do
-        info.text = arg2;
-        info.arg1 = arg1;
-        info.arg2 = arg2;
-        if sendType ~= nil then
-            info.checked = (arg1 == sendType);
-        else
-            info.checked = false;
-        end
-        UIDropDownMenu_AddButton(info);
-    end
-    -- print('DropdownOpen End')
-end
 
-do
-    local resetFrame = ZKYBOMB_SettingUI2;
-    resetFrame.sendTypeLabel = resetFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
-    resetFrame.sendTypeLabel:SetPoint("TOPLEFT", resetFrame.messageLabel, "BOTTOMLEFT", 0, -20);
-    resetFrame.sendTypeLabel:SetText('通知方式');
-    resetFrame.sendTypeLabel:SetJustifyH("LEFT");
-    resetFrame.sendTypeDropdown = CreateFrame("Frame", nil, resetFrame, "UIDropDownMenuTemplate");
-    resetFrame.sendTypeDropdown:SetPoint("LEFT", resetFrame.sendTypeLabel, "RIGHT", -10, -4);
-    resetFrame.sendTypeDropdown:SetPoint("RIGHT", resetFrame, "RIGHT", 10, 0);
-    resetFrame.sendTypeDropdown.RefreshState = DropdownRefresh;
-    resetFrame.sendTypeDropdown.GetListItems = function() return SENDTYPES end;
-    UIDropDownMenu_SetWidth(resetFrame.sendTypeDropdown, resetFrame.messageEdit:GetWidth()-10);
-    -- UIDropDownMenu_SetText(resetFrame.sendTypeDropdown,'队伍')
-    UIDropDownMenu_Initialize(resetFrame.sendTypeDropdown, DropdownOpen)
+    if name == "RM" then
+        self.addFrame:Hide();
+        self.scrollFrame:Hide();
+        self.deleteAllFrame:Show();
+        self.editFrame:Hide();
+        return;
+    end
+    
+    if name == "EDIT" then
+        self.addFrame:Hide();
+        self.scrollFrame:Hide();
+        self.deleteAllFrame:Hide();
+        self.editFrame:Show();
+        return;
+    end
+
+
+    self.deleteAllFrame:Hide();
+    self.addFrame:Hide();
+    self.scrollFrame:Show();
+    self.editFrame:Hide();
 end
