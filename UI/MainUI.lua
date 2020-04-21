@@ -115,6 +115,14 @@ do
             end
         end
     )
+    mainframe.worldMsgButton:SetScript("OnEnter", function(self) 
+        GameTooltip:SetOwner(self, "ANCHOR_TOPLEFT");
+        GameTooltip:SetText(string.format(TT_TITLE, '世界喊话'))
+        GameTooltip:AddLine(string.format(TT_SINGLE_LIGHT, '内容', _addon:GetActiveMessage()))
+        -- GameTooltip:Show()
+    end);
+
+    mainframe.worldMsgButton:SetScript("OnLeave", GameTooltip_Hide);
     -- title = MessageButton:CreateFontString(nil, 'OVERLAY', 'GameFontNormal')
     -- title:SetPoint('CENTER', MessageButton, 0, 0)
     -- title:SetTextColor(1.0, 1.0, 1.0, 1.0)
@@ -142,6 +150,14 @@ do
             end
         end
     )
+    mainframe.otherMsgButton:SetScript("OnEnter", function(self) 
+        GameTooltip:SetOwner(self, "ANCHOR_TOPLEFT");
+        GameTooltip:SetText(string.format(TT_TITLE, '其他喊话'))
+        GameTooltip:AddLine(string.format(TT_SINGLE_LIGHT, '内容', _addon:GetActiveMessage()))
+        -- GameTooltip:Show()
+    end);
+
+    mainframe.otherMsgButton:SetScript("OnLeave", GameTooltip_Hide);
 end
 
 -------------------------------------
@@ -169,7 +185,7 @@ do
         GameTooltip:SetOwner(self, "ANCHOR_TOPLEFT");
         GameTooltip:SetText(string.format(TT_TITLE, '统计'))
         GameTooltip:AddLine(string.format(TT_SINGLE_LIGHT,'已完',_addon:GetTimesPerRound() .. ' - ' .. _addon:GetCurrentTimes()));
-        GameTooltip:AddLine(string.format(TT_SINGLE_LIGHT,'左键','增加'));
+        GameTooltip:AddLine(string.format(TT_SINGLE_LIGHT,'左键','增加计数'));
         GameTooltip:AddLine(string.format(TT_SINGLE_LIGHT,'右键','清零'));
         -- GameTooltip:Show()
     end);
@@ -197,6 +213,13 @@ do
             end
         end
     )
+    mainframe.readyButton:SetScript("OnEnter", function(self) 
+        GameTooltip:SetOwner(self, "ANCHOR_TOPLEFT");
+        GameTooltip:SetText(string.format(TT_TITLE, '就位准备'))
+        -- GameTooltip:Show()
+    end);
+
+    mainframe.readyButton:SetScript("OnLeave", GameTooltip_Hide);
 end
 
 -------------------------------------
@@ -222,4 +245,11 @@ do
             end
         end
     )
+    mainframe.resetButton:SetScript("OnEnter", function(self) 
+        GameTooltip:SetOwner(self, "ANCHOR_TOPLEFT");
+        GameTooltip:SetText(string.format(TT_TITLE, '重置副本'))
+        -- GameTooltip:Show()
+    end);
+
+    mainframe.resetButton:SetScript("OnLeave", GameTooltip_Hide);
 end
