@@ -1,8 +1,9 @@
 local _, _addon = ...
 
 local btnConfig = {
-    ['Width'] = 60,
-    ['Height'] = 32
+    Width = 60,
+    Height = 32,
+    Spacing = 5
 }
 
 -- tricky way to clear all editbox focus
@@ -46,11 +47,15 @@ local function SetTooltip(element, tooltip)
     element:SetScript("OnLeave", GameTooltip_Hide);
 end
 
-
-local mainframe = CreateFrame('Button', nil, UIParent, 'OptionsButtonTemplate')
 local TT_H_1, TT_H_2 = "|cff00FF00".."ZkyBomb".."|r", string.format("|cffFFFFFF%s|r", 'v1.0')
-local TT_ENTRY = "|cFFCFCFCF%s:|r %s" --|cffFFFFFF%s|r"
-SetTooltip(mainframe, TT_H_1 .. ' ' .. TT_H_2)
+local TT_TITLE = "|cffffd100%s|r"
+local TT_SINGLE = "%s：%s"
+local TT_SINGLE_LIGHT = "%s：|cff00ff00%s|r"
+local TT_DOUBLE_L = "%s"
+local TT_DOUBLE_R = "|cff00ff00%s|r"
+local TT_ENTRY = "|cFFCFCFCF%s:|r %s"
+
+local mainframe = CreateFrame('Button', 'ZKYBOMB_MainUI', UIParent, 'OptionsButtonTemplate')
 
 mainframe:SetWidth(btnConfig.Height)
 mainframe:SetHeight(btnConfig.Height)
@@ -68,82 +73,40 @@ mainframe:SetScript(
     'OnClick',
     function(self, button)
         if button == 'RightButton' then
-            init:UpdateOptionFrame()
-            optionframe:Show()
+
         else
-            -- print(_addon.lib)
-            -- print(_addon.Creator)
-            -- print(_addon.SettingUI)
             devPrint(_addon.Main)
             devPrint(_addon:GetCurrentTimes()..' / '.._addon:GetTimesPerRound())
             devPrint(_addon:GetTotalTimes())
             _addon:MainUI_OpenList()
             _addon:SettingUI_UpdateList()
             _addon:SettingUI_UpdateList2()
-            -- ZKYBOMB_SETTINGUI:Show()
         end
     end
 )
+mainframe:SetScript("OnEnter", function(self)
+    GameTooltip:SetOwner(self, "ANCHOR_TOPLEFT");
+    GameTooltip:SetText(string.format(TT_TITLE, '飙车助手'), 1, 0.9, 0.9, 1, true)
+    GameTooltip:AddLine(string.format(TT_SINGLE_LIGHT, '左键','选项'));
+    GameTooltip:AddLine(string.format(TT_SINGLE_LIGHT, '长按','移动位置'));
+    GameTooltip:AddLine(string.format(TT_SINGLE_LIGHT, '右键','重置位置'));
+    -- GameTooltip:Show()
+end);
 
--------------------------------------
--- 重置副本
--------------------------------------
-do
-    local resetButton = CreateFrame('Button', nil, mainframe, 'OptionsButtonTemplate')
-    resetButton:SetWidth(btnConfig.Width)
-    resetButton:SetHeight(btnConfig.Height)
-    resetButton:SetPoint('LEFT', -btnConfig.Width - btnConfig.Width, 0)
-    resetButton:RegisterForClicks('LeftButtonUp', 'RightButtonUp')
-    resetButton:SetText('重置')
-    resetButton:SetScript(
-        'OnClick',
-        function(self, button)
-            if button == 'RightButton' then
-                -- mainframe:SetPoint('TOP', 0, -20)
-                mainframe:ClearAllPoints()
-                mainframe:SetPoint('BOTTOM', UIParent, 'BOTTOM', 0, 95)
-            else
-                ResetInstances()
-                SendChatMessage('副本已重置', msgType.Party)
-            end
-        end
-    )
-end
-
--------------------------------------
--- 团队就位
--------------------------------------
-do
-    local resetButton = CreateFrame('Button', nil, mainframe, 'OptionsButtonTemplate')
-    resetButton:SetWidth(btnConfig.Width)
-    resetButton:SetHeight(btnConfig.Height)
-    resetButton:SetPoint('LEFT', -btnConfig.Width, 0)
-    resetButton:RegisterForClicks('LeftButtonUp', 'RightButtonUp')
-    resetButton:SetText('就位')
-    resetButton:SetScript(
-        'OnClick',
-        function(self, button)
-            if button == 'RightButton' then
-                mainframe:SetPoint('TOP', 0, -20)
-            else
-                DoReadyCheck()
-            end
-        end
-    )
-end
+mainframe:SetScript("OnLeave", GameTooltip_Hide);
 
 -------------------------------------
 -- 世界喊话
 -------------------------------------
 
 do
-    local msgButton = CreateFrame('Button', nil, mainframe, 'OptionsButtonTemplate')
-    msgButton:SetWidth(btnConfig.Width)
-    msgButton:SetHeight(btnConfig.Height)
-    msgButton:SetPoint('LEFT', btnConfig.Height, 0)
-    msgButton:RegisterForClicks('LeftButtonUp', 'RightButtonUp')
-    msgButton:SetText('世界')
-    msgButton:SetScript(
+    mainframe.worldMsgButton = CreateFrame('Button', nil, mainframe, 'OptionsButtonTemplate')
+    mainframe.worldMsgButton:SetWidth(btnConfig.Height)
+    mainframe.worldMsgButton:SetHeight(btnConfig.Height)
+    mainframe.worldMsgButton:SetPoint('LEFT', mainframe,'RIGHT', 0, 0)
+    mainframe.worldMsgButton:RegisterForClicks('LeftButtonUp', 'RightButtonUp')
+    mainframe.worldMsgButton:SetText('世')
+    mainframe.worldMsgButton:SetScript(
         'OnClick',
         function(self, button)
             if button == 'RightButton' then
@@ -164,13 +127,13 @@ end
 -------------------------------------
 
 do
-    local msgButton = CreateFrame('Button', nil, mainframe, 'OptionsButtonTemplate')
-    msgButton:SetWidth(btnConfig.Height)
-    msgButton:SetHeight(btnConfig.Height)
-    msgButton:SetPoint('LEFT', btnConfig.Width + btnConfig.Height, 0)
-    msgButton:RegisterForClicks('LeftButtonUp', 'RightButtonUp')
-    msgButton:SetText('喊')
-    msgButton:SetScript(
+    mainframe.otherMsgButton = CreateFrame('Button', nil, mainframe, 'OptionsButtonTemplate')
+    mainframe.otherMsgButton:SetWidth(btnConfig.Height)
+    mainframe.otherMsgButton:SetHeight(btnConfig.Height)
+    mainframe.otherMsgButton:SetPoint('LEFT', mainframe.worldMsgButton, 'RIGHT', 0, 0)
+    mainframe.otherMsgButton:RegisterForClicks('LeftButtonUp', 'RightButtonUp')
+    mainframe.otherMsgButton:SetText('喊')
+    mainframe.otherMsgButton:SetScript(
         'OnClick',
         function(self, button)
             if button == 'RightButton' then
@@ -186,13 +149,13 @@ end
 -------------------------------------
 
 do
-    local countButton = CreateFrame('Button', nil, mainframe, 'OptionsButtonTemplate')
-    countButton:SetWidth(btnConfig.Height)
-    countButton:SetHeight(btnConfig.Height)
-    countButton:SetPoint('LEFT', btnConfig.Width + btnConfig.Height + btnConfig.Height, 0)
-    countButton:SetText('＋')
-    countButton:RegisterForClicks('LeftButtonUp', 'RightButtonUp')
-    countButton:SetScript(
+    mainframe.countButton = CreateFrame('Button', nil, mainframe, 'OptionsButtonTemplate')
+    mainframe.countButton:SetWidth(btnConfig.Height)
+    mainframe.countButton:SetHeight(btnConfig.Height)
+    mainframe.countButton:SetPoint('LEFT', mainframe.otherMsgButton, 'RIGHT', 0, 0)
+    mainframe.countButton:SetText('＋')
+    mainframe.countButton:RegisterForClicks('LeftButtonUp', 'RightButtonUp')
+    mainframe.countButton:SetScript(
         'OnClick',
         function(self, button)
             if button == 'RightButton' then
@@ -202,24 +165,61 @@ do
             end
         end
     )
-    SetTooltip(countButton, '左键：增加计数\r\n右键：重置计数')
+    mainframe.countButton:SetScript("OnEnter", function(self) 
+        GameTooltip:SetOwner(self, "ANCHOR_TOPLEFT");
+        GameTooltip:SetText(string.format(TT_TITLE, '统计'))
+        GameTooltip:AddLine(string.format(TT_SINGLE_LIGHT,'已完',_addon:GetTimesPerRound() .. ' - ' .. _addon:GetCurrentTimes()));
+        GameTooltip:AddLine(string.format(TT_SINGLE_LIGHT,'左键','增加'));
+        GameTooltip:AddLine(string.format(TT_SINGLE_LIGHT,'右键','清零'));
+        -- GameTooltip:Show()
+    end);
+
+    mainframe.countButton:SetScript("OnLeave", GameTooltip_Hide);
 end
 
--- -------------------------------------
--- -- 刷本计数重置
--- -------------------------------------
+-------------------------------------
+-- 团队就位
+-------------------------------------
+do
+    mainframe.readyButton = CreateFrame('Button', nil, mainframe, 'OptionsButtonTemplate')
+    mainframe.readyButton:SetWidth(btnConfig.Width)
+    mainframe.readyButton:SetHeight(btnConfig.Height)
+    mainframe.readyButton:SetPoint('RIGHT', mainframe, 'LEFT', 0, 0)
+    mainframe.readyButton:RegisterForClicks('LeftButtonUp', 'RightButtonUp')
+    mainframe.readyButton:SetText('准备')
+    mainframe.readyButton:SetScript(
+        'OnClick',
+        function(self, button)
+            if button == 'RightButton' then
+                -- mainframe:SetPoint('TOP', 0, -20)
+            else
+                DoReadyCheck()
+            end
+        end
+    )
+end
 
--- do
---     local countButton = CreateFrame('Button', nil, mainframe, 'OptionsButtonTemplate')
---     countButton:SetWidth(btnConfig.Height)
---     countButton:SetHeight(btnConfig.Height)
---     countButton:SetPoint('LEFT', btnConfig.Width + btnConfig.Height + btnConfig.Height + btnConfig.Height, 0)
---     countButton:SetText('■')
---     countButton:RegisterForClicks('LeftButtonUp', 'RightButtonUp')
---     countButton:SetScript(
---         'OnClick',
---         function(self, button)
---             _addon:ShowReset()
---         end
---     )
--- end
+-------------------------------------
+-- 重置副本
+-------------------------------------
+do
+    mainframe.resetButton = CreateFrame('Button', nil, mainframe, 'OptionsButtonTemplate')
+    mainframe.resetButton:SetWidth(btnConfig.Width)
+    mainframe.resetButton:SetHeight(btnConfig.Height)
+    mainframe.resetButton:SetPoint('RIGHT', mainframe.readyButton, 'LEFT', 0, 0)
+    mainframe.resetButton:RegisterForClicks('LeftButtonUp', 'RightButtonUp')
+    mainframe.resetButton:SetText('重置')
+    mainframe.resetButton:SetScript(
+        'OnClick',
+        function(self, button)
+            if button == 'RightButton' then
+                -- mainframe:SetPoint('TOP', 0, -20)
+                mainframe:ClearAllPoints()
+                mainframe:SetPoint('BOTTOM', UIParent, 'BOTTOM', 0, 95)
+            else
+                ResetInstances()
+                SendChatMessage('副本已重置', msgType.Party)
+            end
+        end
+    )
+end

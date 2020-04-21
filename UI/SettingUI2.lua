@@ -7,9 +7,9 @@ local MIN_ITEMS = 9;
 local HEIGHT_NO_CONTENT = 71;
 
 -- Main frame
-local frame = CreateFrame("Frame", "ZKYBOMB_SettingUI", ZKYBOMB_MainUI, "ButtonFrameTemplate");
-frame:SetPoint('TOPLEFT', ZKYBOMB_MainUI, 'TOPRIGHT', 5, 0)
-frame:SetPoint('BOTTOMLEFT', ZKYBOMB_MainUI, 'BOTTOMRIGHT', 5, 180)
+local frame = CreateFrame("Frame", "ZKYBOMB_SettingUI2", ZKYBOMB_SettingUI, "ButtonFrameTemplate");
+frame:SetPoint('TOPLEFT', ZKYBOMB_SettingUI, 'TOPRIGHT', 5, 0)
+frame:SetPoint('BOTTOMLEFT', ZKYBOMB_SettingUI, 'BOTTOMRIGHT', 5, 180)
 frame:SetWidth(320);
 frame:SetHeight(MIN_ITEMS*LIST_ITEM_HEIGHT + HEIGHT_NO_CONTENT);
 -- frame:SetResizable(true);
@@ -26,7 +26,7 @@ frame.TopRightCorner:SetWidth(18);
 frame.TopRightCorner:SetTexCoord(0.75, 0.89062500, 0.00781250, 0.26562500);
 frame.TitleBg:SetPoint("TOPLEFT",2,-3)
 frame.TitleBg:SetPoint("TOPRIGHT",-2,-3)
--- ZKYBOMB_SettingUICloseButton:SetScript('OnClick',nil)
+-- ZKYBOMB_SettingUI2CloseButton:SetScript('OnClick',nil)
 -- frame:Hide();
 
 ButtonFrameTemplate_HideButtonBar(frame);
@@ -135,7 +135,7 @@ end
 
 -- Times Management
 do
-    local timesFrame = ZKYBOMB_SettingUI;
+    local timesFrame = ZKYBOMB_SettingUI2;
     timesFrame.currentLabel = timesFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
     timesFrame.currentLabel:SetPoint("TOPLEFT", timesFrame, "TOPLEFT", 10, -35);
     -- timesFrame.currentLabel:SetWidth(40)
@@ -150,7 +150,7 @@ do
 end
 
 do
-    local timesFrame = ZKYBOMB_SettingUI;
+    local timesFrame = ZKYBOMB_SettingUI2;
     timesFrame.perRoundLabel = timesFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
     timesFrame.perRoundLabel:SetPoint("LEFT", timesFrame.currentEdit, "RIGHT", 10, 1);
     -- timesFrame.currentLabel:SetWidth(40)
@@ -165,7 +165,7 @@ do
 end
 
 do
-    local timesFrame = ZKYBOMB_SettingUI;
+    local timesFrame = ZKYBOMB_SettingUI2;
     timesFrame.totalLabel = timesFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
     timesFrame.totalLabel:SetPoint("LEFT", timesFrame.perRoundEdit, "RIGHT", 10, 1);
     -- timesFrame.currentLabel:SetWidth(40)
@@ -256,11 +256,11 @@ end
 
 
 -- Main frame
-local frame2 = CreateFrame("Frame", "ZKYBOMB_SettingUI2", frame, "ButtonFrameTemplate");
+local frame2 = CreateFrame("Frame", "ZKYBOMB_SettingUI22", frame, "ButtonFrameTemplate");
 frame2:SetPoint('TOP', frame, 'BOTTOM', 0, -5)
 frame2:SetPoint('LEFT', frame, 'LEFT', 0, 0)
 frame2:SetPoint('RIGHT', frame, 'RIGHT', 0, 0)
-frame2:SetPoint('BOTTOM', ZKYBOMB_MainUI, 'BOTTOM', 0, 0)
+frame2:SetPoint('BOTTOM', ZKYBOMB_SettingUI, 'BOTTOM', 0, 0)
 -- frame2:SetWidth(320);
 -- frame2:SetHeight(MIN_ITEMS*LIST_ITEM_HEIGHT + HEIGHT_NO_CONTENT);
 -- frame:SetResizable(true);
@@ -277,7 +277,7 @@ frame2.TopRightCorner:SetWidth(18);
 frame2.TopRightCorner:SetTexCoord(0.75, 0.89062500, 0.00781250, 0.26562500);
 frame2.TitleBg:SetPoint("TOPLEFT",2,-3)
 frame2.TitleBg:SetPoint("TOPRIGHT",-2,-3)
--- ZKYBOMB_SettingUICloseButton:SetScript('OnClick',nil)
+-- ZKYBOMB_SettingUI2CloseButton:SetScript('OnClick',nil)
 -- frame:Hide();
 
 ButtonFrameTemplate_HideButtonBar(frame2);
@@ -285,7 +285,7 @@ ButtonFrameTemplate_HidePortrait(frame2);
 ButtonFrameTemplate_HideAttic(frame2);
 
 do
-    local resetFrame = ZKYBOMB_SettingUI2;
+    local resetFrame = ZKYBOMB_SettingUI22;
     resetFrame.messageLabel = resetFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
     resetFrame.messageLabel:SetPoint("TOPLEFT", resetFrame, "TOPLEFT", 10, -35);
     resetFrame.messageLabel:SetText('重置通知');
@@ -343,7 +343,7 @@ local function DropdownOpen(self, level, menuList)
 end
 
 do
-    local resetFrame = ZKYBOMB_SettingUI2;
+    local resetFrame = ZKYBOMB_SettingUI22;
     resetFrame.sendTypeLabel = resetFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
     resetFrame.sendTypeLabel:SetPoint("TOPLEFT", resetFrame.messageLabel, "BOTTOMLEFT", 0, -20);
     resetFrame.sendTypeLabel:SetText('通知方式');
