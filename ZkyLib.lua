@@ -66,6 +66,11 @@ function _addon:GetResetMessageSendType()
     return ZkyBombDB.Times.Reset.MessageSendType
 end
 
+function _addon:GetNotifyType()
+    -- return ZkyBombDB.NotifyType
+    return 'PARTY'
+end
+
 function _addon:ResetCurrentTimes()
     print('ResetCurrentTimes')
     ZkyBombDB.Times.Current = 0;

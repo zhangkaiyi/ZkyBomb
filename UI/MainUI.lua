@@ -1,7 +1,7 @@
 local _, _addon = ...
 
 local btnConfig = {
-    Width = 60,
+    Width = 48,
     Height = 32,
     Spacing = 5
 }
@@ -241,7 +241,7 @@ do
                 mainframe:SetPoint('BOTTOM', UIParent, 'BOTTOM', 0, 95)
             else
                 ResetInstances()
-                SendChatMessage('副本已重置', msgType.Party)
+                SendChatMessage('副本已重置', _addon:GetNotifyType())
             end
         end
     )
