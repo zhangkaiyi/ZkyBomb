@@ -105,8 +105,8 @@ function _addon:ResetCurrentTimes()
     local svTable = self:GetSavedVariables()
     if svTable then
         svTable.Times.Current = 0;
-        if _addon:IsSendResetMessage() then
-            SendChatMessage(_addon:GetResetMessage(), _addon:GetResetMessageSendType())
+        if self:IsSendResetMessage() then
+            SendChatMessage(self:GetResetMessage(), self:GetResetMessageSendType())
         end
     end
 end
@@ -116,21 +116,27 @@ function _addon:SendChannelMessage(msg, channelId)
 end
 
 function _addon:SendWorldMessage()
-    local channels = _addon:GetDbChannels()
-                local sortedChannels = {}
-                for k, v in pairs(channels) do
-                    if v.active then
-                    table.insert(sortedChannels, v.id)
-                    end
-                end
-                table.sort(sortedChannels)
-                for i=1,#sortedChannels,1 do
-                    _addon:SendChannelMessage(_addon:GetActiveMessage(), sortedChannels[i])
-                    end
+    local channels = self:GetDbChannels()
+    local sortedChannels = {}
+    for k, v in pairs(channels) do
+        if v.active then
+            table.insert(sortedChannels, v.id)
+        end
+    end
+    table.sort(sortedChannels)
+    for i = 1, #sortedChannels, 1 do
+        self:SendChannelMessage(self:GetActiveMessage(), sortedChannels[i])
+    end
 end
 
+
 function _addon:SendOtherMessage()
-    SendChatMessage(_addon:GetActiveMessage(), "YELL")
+    SendChatMessage(self:GetActiveMessage(), "YELL")
+end
+
+function _addon:SendOneKeyMessage()
+    self:SendWorldMessage()
+    self:SendOtherMessage()
 end
 
 function _addon:TimesIncrease()
