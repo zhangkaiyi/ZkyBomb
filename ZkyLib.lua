@@ -13,30 +13,50 @@ function _addon:PrintError(msg)
     print("|cFFFF3333" .. _addonName .. ": " .. msg:gsub("|r", "|cFFFF3333"));
 end
 
-function _addon:GetActiveMessage()
-    local messages = ZkyBombDB['Messages']
-    local message = ''
-    for k, v in pairs(messages) do if v.active then message = k end end
-    return message
+function _addon:GetSavedVariables()
+    if ZkyBombDB == nil then
+        self:PrintError('SV is nil');
+    end
+    return ZkyBombDB
 end
 
+function _addon:GetActiveMessage()
+    local svTable = self:GetSavedVariables()
+    if svTable then
+        local messages = svTable['Messages']
+        local message = ''
+        for k, v in pairs(messages) do if v.active then message = k end end
+        return message
+    end
+end
+
+
 function _addon:GetCurrentTimes()
-    return ZkyBombDB.Times.Current
+    local svTable = self:GetSavedVariables()
+    if svTable then
+        return svTable['Times']['Current']
+    end
 end
 
 function _addon:GetTimesPerRound()
-    local current = ZkyBombDB['Times']['PerRound']
-    return current
+    local svTable = self:GetSavedVariables()
+    if svTable then
+        return svTable['Times']['PerRound']
+    end
 end
 
 function _addon:GetTotalTimes()
-    local current = ZkyBombDB['Times']['Total']
-    return current
+    local svTable = self:GetSavedVariables()
+    if svTable then
+        return svTable['Times']['Total']
+    end
 end
 
 function _addon:GetDbChannels()
-    local channels = ZkyBombDB['Channels']
-    return channels
+    local svTable = self:GetSavedVariables()
+    if svTable then
+        return svTable['Channels']
+    end
 end
 
 function _addon:GetJoinedChannels()
@@ -54,30 +74,40 @@ function _addon:GetJoinedChannels()
 end
 
 function _addon:GetResetMessage()
-    return ZkyBombDB.Times.Reset.Message
+    local svTable = self:GetSavedVariables()
+    if svTable then
+        return svTable.Times.Reset.Message
+    end
 end
 
 function _addon:IsSendResetMessage()
-    local current = ZkyBombDB.Times.Reset.MessageIsSend
-    return current
+    local svTable = self:GetSavedVariables()
+    if svTable then
+        return svTable.Times.Reset.MessageIsSend
+    end
 end
 
 function _addon:GetResetMessageSendType()
-    return ZkyBombDB.Times.Reset.MessageSendType
+    local svTable = self:GetSavedVariables()
+    if svTable then
+        return svTable.Times.Reset.MessageSendType
+    end
 end
 
 function _addon:GetNotifyType()
-    -- return ZkyBombDB.NotifyType
-    return 'PARTY'
+    local svTable = self:GetSavedVariables()
+    if svTable then
+        return svTable.Messages.NotifyType or 'PARTY'
+    end
 end
 
 function _addon:ResetCurrentTimes()
-    print('ResetCurrentTimes')
-    ZkyBombDB.Times.Current = 0;
-    print(_addon:IsSendResetMessage())
-    if _addon:IsSendResetMessage() then 
-        -- print(_addon:GetResetMessageSendType())
-        SendChatMessage(_addon:GetResetMessage(), _addon:GetResetMessageSendType())
+    local svTable = self:GetSavedVariables()
+    if svTable then
+        svTable.Times.Current = 0;
+        if _addon:IsSendResetMessage() then
+            SendChatMessage(_addon:GetResetMessage(), _addon:GetResetMessageSendType())
+        end
     end
 end
 
@@ -104,19 +134,26 @@ function _addon:SendOtherMessage()
 end
 
 function _addon:TimesIncrease()
-    local timePerRound = _addon:GetTimesPerRound()
-    local current = _addon:GetCurrentTimes()
-    local total = _addon:GetTotalTimes()
-    current = current + 1
-    total = total +1
-    ZkyBombDB['Times']['Current'] = current;
-    ZkyBombDB['Times']['Total'] = total;
-    SendChatMessage(timePerRound .. '-------' .. current, 'PARTY')
+    local svTable = self:GetSavedVariables()
+    if svTable then
+        local timePerRound = self:GetTimesPerRound()
+        local current = self:GetCurrentTimes()
+        local total = self:GetTotalTimes()
+        current = current + 1
+        total = total + 1
+        svTable['Times']['Current'] = current
+        svTable['Times']['Total'] = total
+        SendChatMessage(timePerRound .. '-------' .. current, 'PARTY')
+    end
 end
 
+
 function _addon:TimesReset()
-    ZkyBombDB.Times.Current = 0;
-    if _addon:IsSendResetMessage() then 
-        SendChatMessage(_addon:GetResetMessage(), _addon:GetResetMessageSendType())
+    local svTable = self:GetSavedVariables()
+    if svTable then
+        svTable.Times.Current = 0;
+        if self:IsSendResetMessage() then
+            SendChatMessage(self:GetResetMessage(), self:GetResetMessageSendType())
+        end
     end
 end

@@ -32,21 +32,6 @@ local clearAllFocus = (function()
     end
 end)()
 
---- Set tooltip for the frame element
--- @param element A frame object
--- @param tooltip The tooltip text
-local function SetTooltip(element, tooltip)
-    element:SetScript("OnEnter", function(self) 
-        GameTooltip:SetOwner(self, "ANCHOR_TOPLEFT");
-        GameTooltip:SetText('次数', 1, 0.9, 0.9, 1, true);
-        GameTooltip:AddLine('左键：递增', 1, 0.9, 0.9, 1, true);
-        GameTooltip:AddLine('右键：重置', 1, 0.9, 0.9, 1, true);
-        -- GameTooltip:Show()
-    end);
-
-    element:SetScript("OnLeave", GameTooltip_Hide);
-end
-
 local TT_H_1, TT_H_2 = "|cff00FF00".."ZkyBomb".."|r", string.format("|cffFFFFFF%s|r", 'v1.0')
 local TT_TITLE = "|cffffd100%s|r"
 local TT_SINGLE = "%s：%s"
@@ -73,7 +58,8 @@ mainframe:SetScript(
     'OnClick',
     function(self, button)
         if button == 'RightButton' then
-
+            mainframe:ClearAllPoints()
+            mainframe:SetPoint('BOTTOM', UIParent, 'BOTTOM', 0, 95)
         else
             devPrint(_addon.Main)
             devPrint(_addon:GetCurrentTimes()..' / '.._addon:GetTimesPerRound())
@@ -90,7 +76,7 @@ mainframe:SetScript("OnEnter", function(self)
     GameTooltip:AddLine(string.format(TT_SINGLE_LIGHT, '左键','选项'));
     GameTooltip:AddLine(string.format(TT_SINGLE_LIGHT, '长按','移动位置'));
     GameTooltip:AddLine(string.format(TT_SINGLE_LIGHT, '右键','重置位置'));
-    -- GameTooltip:Show()
+    GameTooltip:Show()
 end);
 
 mainframe:SetScript("OnLeave", GameTooltip_Hide);
@@ -119,7 +105,7 @@ do
         GameTooltip:SetOwner(self, "ANCHOR_TOPLEFT");
         GameTooltip:SetText(string.format(TT_TITLE, '世界喊话'))
         GameTooltip:AddLine(string.format(TT_SINGLE_LIGHT, '内容', _addon:GetActiveMessage()))
-        -- GameTooltip:Show()
+        GameTooltip:Show()
     end);
 
     mainframe.worldMsgButton:SetScript("OnLeave", GameTooltip_Hide);
@@ -154,7 +140,7 @@ do
         GameTooltip:SetOwner(self, "ANCHOR_TOPLEFT");
         GameTooltip:SetText(string.format(TT_TITLE, '其他喊话'))
         GameTooltip:AddLine(string.format(TT_SINGLE_LIGHT, '内容', _addon:GetActiveMessage()))
-        -- GameTooltip:Show()
+        GameTooltip:Show()
     end);
 
     mainframe.otherMsgButton:SetScript("OnLeave", GameTooltip_Hide);
@@ -187,7 +173,7 @@ do
         GameTooltip:AddLine(string.format(TT_SINGLE_LIGHT,'已完',_addon:GetTimesPerRound() .. ' - ' .. _addon:GetCurrentTimes()));
         GameTooltip:AddLine(string.format(TT_SINGLE_LIGHT,'左键','增加计数'));
         GameTooltip:AddLine(string.format(TT_SINGLE_LIGHT,'右键','清零'));
-        -- GameTooltip:Show()
+        GameTooltip:Show()
     end);
 
     mainframe.countButton:SetScript("OnLeave", GameTooltip_Hide);
@@ -216,7 +202,7 @@ do
     mainframe.readyButton:SetScript("OnEnter", function(self) 
         GameTooltip:SetOwner(self, "ANCHOR_TOPLEFT");
         GameTooltip:SetText(string.format(TT_TITLE, '就位准备'))
-        -- GameTooltip:Show()
+        GameTooltip:Show()
     end);
 
     mainframe.readyButton:SetScript("OnLeave", GameTooltip_Hide);
@@ -236,9 +222,7 @@ do
         'OnClick',
         function(self, button)
             if button == 'RightButton' then
-                -- mainframe:SetPoint('TOP', 0, -20)
-                mainframe:ClearAllPoints()
-                mainframe:SetPoint('BOTTOM', UIParent, 'BOTTOM', 0, 95)
+                
             else
                 ResetInstances()
                 SendChatMessage('副本已重置', _addon:GetNotifyType())
@@ -248,7 +232,7 @@ do
     mainframe.resetButton:SetScript("OnEnter", function(self) 
         GameTooltip:SetOwner(self, "ANCHOR_TOPLEFT");
         GameTooltip:SetText(string.format(TT_TITLE, '重置副本'))
-        -- GameTooltip:Show()
+        GameTooltip:Show()
     end);
 
     mainframe.resetButton:SetScript("OnLeave", GameTooltip_Hide);
