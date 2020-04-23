@@ -1,7 +1,10 @@
 local _addonName, _addon = ...;
 local L = _addon:GetLocalization();
 
-local HEIGHT_NO_CONTENT = 71;
+-- ShowAttic
+-- local HEIGHT_NO_CONTENT = 71;
+-- HideAttic
+local HEIGHT_NO_CONTENT = 35;
 local listItemHeight = ZKYBOMB_SETTINGUI_CHANNELS.scrollFrame.items[1]:GetHeight();
 local listElementCount = #ZKYBOMB_SETTINGUI_CHANNELS.scrollFrame.items;
 local maxElementCount = listElementCount;

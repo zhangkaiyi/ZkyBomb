@@ -17,8 +17,14 @@ main.lua
 
 UI/MainUI.lua
 UI/ResetUI.lua
-UI/SettingUI.lua
-UI/SettingUI_functions.lua
-UI/SettingUI2.lua
-UI/SettingUI2_functions.lua
+
+UI/SettingUI_Messages.lua
+UI/SettingUI_Messages_Func.lua
+
+UI/SettingUI_Channels.lua
+UI/SettingUI_Channels_Func.lua
+
+UI/SettingUI_Times.lua
+UI/SettingUI_Times_Func.lua
+
 UI/minimapButton.lua
