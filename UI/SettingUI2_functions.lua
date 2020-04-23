@@ -10,49 +10,6 @@ local sortedEntries = {};
 local entryCount = 0;
 
 ----------------------------------------------------------------------------------------------------------------
--- Top bar button actions
-----------------------------------------------------------------------------------------------------------------
---- Fill list from SV data
-
---- Open settings menu
-ZKYBOMB_SETTINGUI_CHANNELS.settingsBtn:SetScript("OnClick", function(self) 
-    -- _addon:SettingUI_UpdateList()
-end);
-
---- Open add frame
-ZKYBOMB_SETTINGUI_CHANNELS.addBtn:SetScript("OnClick", function(self)
-    -- _addon:MainUI_ShowAddForm();
-    _addon:SettingUI_UpdateList()
-end);
-
---- Toggle addon on/off
-ZKYBOMB_SETTINGUI_CHANNELS.toggleBtn:SetScript("OnClick", function(self) 
-    -- _addon:ToggleAddon();
-    -- ZKYBOMB_SETTINGUI_CHANNELS:UpdateAddonState();
-end);
-
---- Open delete frame
-ZKYBOMB_SETTINGUI_CHANNELS.deleteBtn:SetScript("OnClick", function(self) 
-    -- ZKYBOMB_SETTINGUI_CHANNELS:ShowContent("RM");
-end);
-
---- currentEdit
-ZKYBOMB_SETTINGUI_CHANNELS.currentEdit:SetScript("OnTextChanged", function(self) 
-    ZkyBombDB['Times']['Current'] = self:GetText()
-end);
-
---- perRoundEdit
-ZKYBOMB_SETTINGUI_CHANNELS.perRoundEdit:SetScript("OnTextChanged", function(self) 
-    ZkyBombDB['Times']['PerRound'] = self:GetText()
-end);
-
---- totalEdit
-ZKYBOMB_SETTINGUI_CHANNELS.totalEdit:SetScript("OnTextChanged", function(self) 
-    ZkyBombDB['Times']['Total'] = self:GetText()
-end);
-
-
-----------------------------------------------------------------------------------------------------------------
 -- Control functions
 ----------------------------------------------------------------------------------------------------------------
 
@@ -180,9 +137,9 @@ function _addon:SettingUI_UpdateList()
     UpdateScrollFrame()
     RecalculateSize();
 
-    -- ZKYBOMB_SETTINGUI_TIMES.currentEdit:SetText(_addon:GetCurrentTimes());
-    -- ZKYBOMB_SETTINGUI_TIMES.perRoundEdit:SetText(_addon:GetTimesPerRound());
-    -- ZKYBOMB_SETTINGUI_TIMES.totalEdit:SetText(_addon:GetTotalTimes());
+    ZKYBOMB_SETTINGUI_TIMES.currentEdit:SetText(_addon:GetCurrentTimes());
+    ZKYBOMB_SETTINGUI_TIMES.perRoundEdit:SetText(_addon:GetTimesPerRound());
+    ZKYBOMB_SETTINGUI_TIMES.totalEdit:SetText(_addon:GetTotalTimes());
 end
 
 --- Fill list from SV data

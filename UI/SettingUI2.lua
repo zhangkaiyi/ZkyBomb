@@ -241,10 +241,9 @@ end
 
 -- Times Management
 do
-    local timesFrame = ZKYBOMB_SETTINGUI_CHANNELS;
+    local timesFrame = ZKYBOMB_SETTINGUI_TIMES;
     timesFrame.currentLabel = timesFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
-    timesFrame.currentLabel:SetPoint("TOPLEFT", timesFrame, "TOPLEFT", 10, -35);
-    -- timesFrame.currentLabel:SetWidth(40)
+    timesFrame.currentLabel:SetPoint("TOPLEFT", ZKYBOMB_SETTINGUI_TIMES, "TOPLEFT", 10, -35);
     timesFrame.currentLabel:SetText(L["UI_TIMES_CURRENT"]);
     timesFrame.currentLabel:SetJustifyH("LEFT");
     timesFrame.currentEdit = MakeEditBox(timesFrame, 3, 27, false);
@@ -252,14 +251,18 @@ do
     timesFrame.currentEdit:SetWidth(40);
     timesFrame.currentEdit:SetNumeric(true)
     timesFrame.currentEdit:SetScript('OnChar', mustnumber)
-    -- timesFrame.currentEdit:SetText(_addon:GetActiveMessage());
+    timesFrame.currentEdit:SetScript("OnTextChanged", function(self)
+        local svTable = self:GetSavedVariables()
+        if svTable then
+            svTable['Times']['Current'] = self:GetText()
+        end
+    end);
 end
 
 do
-    local timesFrame = ZKYBOMB_SETTINGUI_CHANNELS;
+    local timesFrame = ZKYBOMB_SETTINGUI_TIMES;
     timesFrame.perRoundLabel = timesFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
     timesFrame.perRoundLabel:SetPoint("LEFT", timesFrame.currentEdit, "RIGHT", 10, 1);
-    -- timesFrame.currentLabel:SetWidth(40)
     timesFrame.perRoundLabel:SetText(L["UI_TIMES_PERROUND"]);
     timesFrame.perRoundLabel:SetJustifyH("LEFT");
     timesFrame.perRoundEdit = MakeEditBox(timesFrame, 3, 27, false);
@@ -267,14 +270,18 @@ do
     timesFrame.perRoundEdit:SetWidth(40);
     timesFrame.perRoundEdit:SetNumeric(true)
     timesFrame.currentEdit:SetScript('OnChar', mustnumber)
-    -- timesFrame.currentEdit:SetText(_addon:GetActiveMessage());
+    timesFrame.perRoundEdit:SetScript("OnTextChanged", function(self) 
+        local svTable = self:GetSavedVariables()
+        if svTable then
+            svTable['Times']['PerRound'] = self:GetText()
+        end
+    end);
 end
 
 do
-    local timesFrame = ZKYBOMB_SETTINGUI_CHANNELS;
+    local timesFrame = ZKYBOMB_SETTINGUI_TIMES;
     timesFrame.totalLabel = timesFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
     timesFrame.totalLabel:SetPoint("LEFT", timesFrame.perRoundEdit, "RIGHT", 10, 1);
-    -- timesFrame.currentLabel:SetWidth(40)
     timesFrame.totalLabel:SetText(L["UI_TIMES_TAOTAL"]);
     timesFrame.totalLabel:SetJustifyH("LEFT");
     timesFrame.totalEdit = MakeEditBox(timesFrame, 3, 27, false);
@@ -282,7 +289,12 @@ do
     timesFrame.totalEdit:SetWidth(40);
     timesFrame.totalEdit:SetNumeric(true)
     timesFrame.totalEdit:SetScript('OnChar', mustnumber)
-    -- timesFrame.currentEdit:SetText(_addon:GetActiveMessage());
+    timesFrame.totalEdit:SetScript("OnTextChanged", function(self) 
+        local svTable = self:GetSavedVariables()
+        if svTable then
+            svTable['Times']['Total'] = self:GetText()
+        end
+    end);
 end
 
 _addon.SENDTYPES = {
@@ -307,10 +319,9 @@ local function DropdownRefresh(self)
     UIDropDownMenu_SetText(self, optionName);
 end;
 local function DropdownOpen(self, level, menuList)
-    -- print('DropdownOpen Start')
+    devPrint('DropdownOpen Start')
     local info = UIDropDownMenu_CreateInfo();
     info.func = function(selfb, k, v)
-        -- print(k)
         ZkyBombDB.Times.Reset.MessageSendType = k;
         UIDropDownMenu_SetText(self, v);
     end;
@@ -326,7 +337,7 @@ local function DropdownOpen(self, level, menuList)
         end
         UIDropDownMenu_AddButton(info);
     end
-    -- print('DropdownOpen End')
+    devPrint('DropdownOpen End')
 end
 
 do
