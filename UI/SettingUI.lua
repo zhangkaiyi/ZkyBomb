@@ -7,7 +7,7 @@ local MIN_ITEMS = 9;
 local HEIGHT_NO_CONTENT = 71;
 
 -- Main frame
-local frame = CreateFrame("Frame", "ZKYBOMB_SettingUI", UIParent, "ButtonFrameTemplate");
+local frame = CreateFrame("Frame", "ZKYBOMB_SETTINGUI_MESSAGES", UIParent, "ButtonFrameTemplate");
 frame:SetPoint("CENTER", 0, 0);
 frame:SetWidth(480);
 frame:SetHeight(MAX_ITEMS*LIST_ITEM_HEIGHT + HEIGHT_NO_CONTENT);
