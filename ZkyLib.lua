@@ -6,6 +6,9 @@ local L = _addon:GetLocalization();
 
 _addon.sv = {}
 _addon.sv.times = {}
+
+_addon.func = {}
+_addon.func.times = {}
 ------------------------------------------------
 -- Helper
 ------------------------------------------------
@@ -206,4 +209,33 @@ end
 function _addon.sv.times:SetResetMessage(msg)
     local svTable = _addon:GetSavedVariables()
     svTable.Times.ResetMessage = msg
+end
+
+function _addon.func.times:Increase()
+    local svTable = _addon:GetSavedVariables()
+    if svTable then
+        local timePerRound = _addon:GetTimesPerRound()
+        local current = _addon:GetCurrentTimes()
+        local total = _addon:GetTotalTimes()
+        current = current + 1
+        total = total + 1
+        svTable['Times']['Current'] = current
+        svTable['Times']['Total'] = total
+        local msg = _addon.sv.times:GetIncreaseMessage()
+        msg = string.gsub(msg, '{R}', timePerRound)
+        msg = string.gsub(msg, '{T}', current)
+        if _addon.sv.times:GetIsNotify() then
+            SendChatMessage(msg, _addon.sv.times:GetNotifyType())
+        end
+    end
+end
+
+function _addon.func.times:Reset()
+    local svTable = _addon:GetSavedVariables()
+    if svTable then
+        svTable.Times.Current = 0;
+        if _addon.sv.times:GetIsNotify() then
+            SendChatMessage(_addon.sv.times:GetResetMessage(), _addon.sv.times:GetNotifyType())
+        end
+    end
 end

@@ -165,7 +165,8 @@ do
             if button == 'RightButton' then
                 _addon:ShowReset()
             else
-                _addon:TimesIncrease()
+                -- _addon:TimesIncrease()
+                _addon.func.times:Increase()
             end
         end
     )
