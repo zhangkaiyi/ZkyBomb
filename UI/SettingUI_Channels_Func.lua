@@ -139,16 +139,16 @@ function _addon:SettingUI_UpdateList()
 
     UpdateScrollFrame()
     RecalculateSize();
-
-    ZKYBOMB_SETTINGUI_TIMES.currentEdit:SetText(_addon:GetCurrentTimes());
-    ZKYBOMB_SETTINGUI_TIMES.perRoundEdit:SetText(_addon:GetTimesPerRound());
-    ZKYBOMB_SETTINGUI_TIMES.totalEdit:SetText(_addon:GetTotalTimes());
 end
 
 --- Fill list from SV data
 function _addon:SettingUI_UpdateList2()
     ZKYBOMB_SETTINGUI_TIMES.messageEdit:SetText(_addon:GetResetMessage());
-     UIDropDownMenu_SetText(ZKYBOMB_SETTINGUI_TIMES.sendTypeDropdown, _addon.SENDTYPES[_addon:GetResetMessageSendType()])
+    ZKYBOMB_SETTINGUI_TIMES.currentEdit:SetText(_addon:GetCurrentTimes());
+    ZKYBOMB_SETTINGUI_TIMES.perRoundEdit:SetText(_addon:GetTimesPerRound());
+    ZKYBOMB_SETTINGUI_TIMES.totalEdit:SetText(_addon:GetTotalTimes());
+    ZKYBOMB_SETTINGUI_TIMES.isNotifyCheckbox:SetChecked(_addon.sv.times:GetIsNotify());
+    UIDropDownMenu_SetText(ZKYBOMB_SETTINGUI_TIMES.sendTypeDropdown, _addon.SENDTYPES[_addon:GetResetMessageSendType()])
 end
 
 

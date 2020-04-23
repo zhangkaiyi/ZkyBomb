@@ -3,6 +3,9 @@ local SendChatMessage = SendChatMessage
 local GetChannelList = GetChannelList
 
 local L = _addon:GetLocalization();
+
+_addon.sv = {}
+_addon.sv.times = {}
 ------------------------------------------------
 -- Helper
 ------------------------------------------------
@@ -162,4 +165,15 @@ function _addon:TimesReset()
             SendChatMessage(self:GetResetMessage(), self:GetResetMessageSendType())
         end
     end
+end
+
+
+function _addon.sv.times:GetIsNotify()
+    local svTable =_addon:GetSavedVariables();
+    return svTable.Times.IsNotify;
+end
+
+function _addon.sv.times:SetIsNotify(checked)
+    local svTable =_addon:GetSavedVariables();
+    svTable.Times.IsNotify = checked;
 end

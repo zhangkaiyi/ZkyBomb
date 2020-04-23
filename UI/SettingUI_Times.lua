@@ -66,57 +66,54 @@ local function MakeEditBox(parent, maxLen, height, isMultiline)
     return edit;
 end
 
--- Times Management
+-- 当前次数
 do
-    local timesFrame = theFrame;
-    timesFrame.currentLabel = timesFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
-    timesFrame.currentLabel:SetPoint("TOPLEFT", theFrame, "TOPLEFT", 10, -35);
-    timesFrame.currentLabel:SetText(L["UI_TIMES_CURRENT"]);
-    timesFrame.currentLabel:SetJustifyH("LEFT");
-    timesFrame.currentEdit = MakeEditBox(timesFrame, 3, 27, false);
-    timesFrame.currentEdit:SetPoint("LEFT", timesFrame.currentLabel, "RIGHT", 5, -1);
-    timesFrame.currentEdit:SetWidth(40);
-    timesFrame.currentEdit:SetNumeric(true)
-    timesFrame.currentEdit:SetScript('OnChar', mustnumber)
-    timesFrame.currentEdit:SetScript("OnTextChanged", function(self)
+    theFrame.currentLabel = theFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
+    theFrame.currentLabel:SetPoint("TOPLEFT", theFrame, "TOPLEFT", 10, -35);
+    theFrame.currentLabel:SetText(L["UI_TIMES_CURRENT"]);
+    theFrame.currentLabel:SetJustifyH("LEFT");
+    theFrame.currentEdit = MakeEditBox(theFrame, 3, 27, false);
+    theFrame.currentEdit:SetPoint("LEFT", theFrame.currentLabel, "RIGHT", 5, -1);
+    theFrame.currentEdit:SetWidth(40);
+    theFrame.currentEdit:SetNumeric(true)
+    theFrame.currentEdit:SetScript('OnChar', mustnumber)
+    theFrame.currentEdit:SetScript("OnTextChanged", function(self)
         local svTable = _addon:GetSavedVariables()
         if svTable then
             svTable['Times']['Current'] = self:GetText()
         end
     end);
 end
-
+-- 每轮次数
 do
-    local timesFrame = theFrame;
-    timesFrame.perRoundLabel = timesFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
-    timesFrame.perRoundLabel:SetPoint("LEFT", timesFrame.currentEdit, "RIGHT", 10, 1);
-    timesFrame.perRoundLabel:SetText(L["UI_TIMES_PERROUND"]);
-    timesFrame.perRoundLabel:SetJustifyH("LEFT");
-    timesFrame.perRoundEdit = MakeEditBox(timesFrame, 3, 27, false);
-    timesFrame.perRoundEdit:SetPoint("LEFT", timesFrame.perRoundLabel, "RIGHT", 5, -1);
-    timesFrame.perRoundEdit:SetWidth(40);
-    timesFrame.perRoundEdit:SetNumeric(true)
-    timesFrame.currentEdit:SetScript('OnChar', mustnumber)
-    timesFrame.perRoundEdit:SetScript("OnTextChanged", function(self) 
+    theFrame.perRoundLabel = theFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
+    theFrame.perRoundLabel:SetPoint("LEFT", theFrame.currentEdit, "RIGHT", 10, 1);
+    theFrame.perRoundLabel:SetText(L["UI_TIMES_PERROUND"]);
+    theFrame.perRoundLabel:SetJustifyH("LEFT");
+    theFrame.perRoundEdit = MakeEditBox(theFrame, 3, 27, false);
+    theFrame.perRoundEdit:SetPoint("LEFT", theFrame.perRoundLabel, "RIGHT", 5, -1);
+    theFrame.perRoundEdit:SetWidth(40);
+    theFrame.perRoundEdit:SetNumeric(true)
+    theFrame.currentEdit:SetScript('OnChar', mustnumber)
+    theFrame.perRoundEdit:SetScript("OnTextChanged", function(self) 
         local svTable = _addon:GetSavedVariables()
         if svTable then
             svTable['Times']['PerRound'] = self:GetText()
         end
     end);
 end
-
+-- 完成总数
 do
-    local timesFrame = theFrame;
-    timesFrame.totalLabel = timesFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
-    timesFrame.totalLabel:SetPoint("LEFT", timesFrame.perRoundEdit, "RIGHT", 10, 1);
-    timesFrame.totalLabel:SetText(L["UI_TIMES_TAOTAL"]);
-    timesFrame.totalLabel:SetJustifyH("LEFT");
-    timesFrame.totalEdit = MakeEditBox(timesFrame, 3, 27, false);
-    timesFrame.totalEdit:SetPoint("LEFT", timesFrame.totalLabel, "RIGHT", 5, -1);
-    timesFrame.totalEdit:SetWidth(40);
-    timesFrame.totalEdit:SetNumeric(true)
-    timesFrame.totalEdit:SetScript('OnChar', mustnumber)
-    timesFrame.totalEdit:SetScript("OnTextChanged", function(self) 
+    theFrame.totalLabel = theFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
+    theFrame.totalLabel:SetPoint("LEFT", theFrame.perRoundEdit, "RIGHT", 10, 1);
+    theFrame.totalLabel:SetText(L["UI_TIMES_TAOTAL"]);
+    theFrame.totalLabel:SetJustifyH("LEFT");
+    theFrame.totalEdit = MakeEditBox(theFrame, 3, 27, false);
+    theFrame.totalEdit:SetPoint("LEFT", theFrame.totalLabel, "RIGHT", 5, -1);
+    theFrame.totalEdit:SetWidth(40);
+    theFrame.totalEdit:SetNumeric(true)
+    theFrame.totalEdit:SetScript('OnChar', mustnumber)
+    theFrame.totalEdit:SetScript("OnTextChanged", function(self) 
         local svTable = _addon:GetSavedVariables()
         if svTable then
             svTable['Times']['Total'] = self:GetText()
@@ -168,45 +165,65 @@ local function DropdownOpen(self, level, menuList)
 end
 
 do
-    local resetFrame = theFrame;
-    resetFrame.increaseLabel = resetFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
-    resetFrame.increaseLabel:SetPoint("TOPLEFT", resetFrame.Inset, "TOPLEFT", 10, -15);
-    resetFrame.increaseLabel:SetText('计数通知');
-    resetFrame.increaseLabel:SetJustifyH("LEFT");
-    resetFrame.increaseEdit = MakeEditBox(resetFrame, 100, 27, false);
-    resetFrame.increaseEdit:SetPoint("LEFT", resetFrame.increaseLabel, "RIGHT", 5, -1);
-    resetFrame.increaseEdit:SetPoint("RIGHT", resetFrame.Inset, "RIGHT", -10, -1);
-    resetFrame.increaseEdit:SetScript("OnTextChanged", function(self) 
+    theFrame.increaseLabel = theFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
+    theFrame.increaseLabel:SetPoint("TOPLEFT", theFrame.Inset, "TOPLEFT", 10, -15);
+    theFrame.increaseLabel:SetText('计数通知');
+    theFrame.increaseLabel:SetJustifyH("LEFT");
+    theFrame.increaseEdit = MakeEditBox(theFrame, 100, 27, false);
+    theFrame.increaseEdit:SetPoint("LEFT", theFrame.increaseLabel, "RIGHT", 5, -1);
+    theFrame.increaseEdit:SetPoint("RIGHT", theFrame.Inset, "RIGHT", -10, -1);
+    theFrame.increaseEdit:SetScript("OnTextChanged", function(self) 
         
     end);
 end
 
 do
-    local resetFrame = theFrame;
-    resetFrame.messageLabel = resetFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
-    resetFrame.messageLabel:SetPoint("TOPLEFT", resetFrame.increaseLabel, "BOTTOMLEFT", 0, -20);
-    resetFrame.messageLabel:SetText('重置通知');
-    resetFrame.messageLabel:SetJustifyH("LEFT");
-    resetFrame.messageEdit = MakeEditBox(resetFrame, 100, 27, false);
-    resetFrame.messageEdit:SetPoint("LEFT", resetFrame.messageLabel, "RIGHT", 5, -1);
-    resetFrame.messageEdit:SetPoint("RIGHT", resetFrame.Inset, "RIGHT", -10, -1);
-    resetFrame.messageEdit:SetScript("OnTextChanged", function(self) 
+    theFrame.messageLabel = theFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
+    theFrame.messageLabel:SetPoint("TOPLEFT", theFrame.increaseLabel, "BOTTOMLEFT", 0, -20);
+    theFrame.messageLabel:SetText('重置通知');
+    theFrame.messageLabel:SetJustifyH("LEFT");
+    theFrame.messageEdit = MakeEditBox(theFrame, 100, 27, false);
+    theFrame.messageEdit:SetPoint("LEFT", theFrame.messageLabel, "RIGHT", 5, -1);
+    theFrame.messageEdit:SetPoint("RIGHT", theFrame.Inset, "RIGHT", -10, -1);
+    theFrame.messageEdit:SetScript("OnTextChanged", function(self) 
         ZkyBombDB.Times.Reset.Message = self:GetText()
     end);
 end
 
 do
-    local resetFrame = theFrame;
-    resetFrame.sendTypeLabel = resetFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
-    resetFrame.sendTypeLabel:SetPoint("TOPLEFT", resetFrame.messageLabel, "BOTTOMLEFT", 0, -20);
-    resetFrame.sendTypeLabel:SetText('通知类型');
-    resetFrame.sendTypeLabel:SetJustifyH("LEFT");
-    resetFrame.sendTypeDropdown = CreateFrame("Frame", nil, resetFrame, "UIDropDownMenuTemplate");
-    resetFrame.sendTypeDropdown:SetPoint("LEFT", resetFrame.sendTypeLabel, "RIGHT", -10, -4);
-    resetFrame.sendTypeDropdown:SetPoint("RIGHT", resetFrame.Inset, "RIGHT", 10, 0);
-    resetFrame.sendTypeDropdown.RefreshState = DropdownRefresh;
-    resetFrame.sendTypeDropdown.GetListItems = function() return SENDTYPES end;
-    UIDropDownMenu_SetWidth(resetFrame.sendTypeDropdown, resetFrame.messageEdit:GetWidth()-10);
+    theFrame.isNotifyLabel = theFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
+    theFrame.isNotifyLabel:SetPoint("TOPLEFT", theFrame.messageLabel, "BOTTOMLEFT", 0, -20);
+    theFrame.isNotifyLabel:SetText('是否通知');
+    theFrame.isNotifyLabel:SetJustifyH("LEFT");
+    theFrame.isNotifyCheckbox = CreateFrame("CheckButton", nil, theFrame);
+    theFrame.isNotifyCheckbox:SetScript("OnClick", function(self)	
+        local svTable = _addon:GetSavedVariables()
+        if svTable then
+            _addon.sv.times:SetIsNotify(self:GetChecked());
+        end
+    end);
+    theFrame.isNotifyCheckbox:SetNormalTexture([[Interface\Buttons\UI-CheckBox-Up]]);
+    theFrame.isNotifyCheckbox:SetPushedTexture([[Interface\Buttons\UI-CheckBox-Down]]);
+    theFrame.isNotifyCheckbox:SetHighlightTexture([[Interface\Buttons\UI-CheckBox-Highlight]], "ADD");
+    theFrame.isNotifyCheckbox:SetCheckedTexture([[Interface\Buttons\UI-CheckBox-Check]]);
+    theFrame.isNotifyCheckbox:SetDisabledCheckedTexture([[Interface\Buttons\UI-CheckBox-Check-Disabled]]);
+    theFrame.isNotifyCheckbox:SetPoint("LEFT", theFrame.isNotifyLabel, "RIGHT", 5, -1);
+    theFrame.isNotifyCheckbox:SetSize(24, 24);
+    -- theFrame.isNotifyCheckbox:SetPoint("RIGHT", theFrame.Inset, "RIGHT", 10, 0);
+end
+
+do
+    theFrame.sendTypeLabel = theFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
+    theFrame.sendTypeLabel:SetPoint("LEFT", theFrame.isNotifyCheckbox, "RIGHT", 5, 0);
+    theFrame.sendTypeLabel:SetPoint("TOP", theFrame.isNotifyLabel, "TOP", 0, 0);
+    theFrame.sendTypeLabel:SetText('通知类型');
+    theFrame.sendTypeLabel:SetJustifyH("LEFT");
+    theFrame.sendTypeDropdown = CreateFrame("Frame", nil, theFrame, "UIDropDownMenuTemplate");
+    theFrame.sendTypeDropdown:SetPoint("LEFT", theFrame.sendTypeLabel, "RIGHT", -10, -3);
+    -- theFrame.sendTypeDropdown:SetPoint("RIGHT", theFrame.Inset, "RIGHT", 10, 0);
+    theFrame.sendTypeDropdown.RefreshState = DropdownRefresh;
+    theFrame.sendTypeDropdown.GetListItems = function() return SENDTYPES end;
+    UIDropDownMenu_SetWidth(theFrame.sendTypeDropdown, theFrame.messageEdit:GetWidth()-theFrame.isNotifyLabel:GetWidth() -24 -5 -10);
     -- UIDropDownMenu_SetText(resetFrame.sendTypeDropdown,'队伍')
-    UIDropDownMenu_Initialize(resetFrame.sendTypeDropdown, DropdownOpen)
+    UIDropDownMenu_Initialize(theFrame.sendTypeDropdown, DropdownOpen)
 end

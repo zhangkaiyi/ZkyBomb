@@ -2,7 +2,7 @@ local _addonName, _addon = ...;
 local L = _addon:GetLocalization();
 
 local LIST_ITEM_HEIGHT = 27;
-local MAX_ITEMS = 14;
+local MAX_ITEMS = 15;
 local MIN_ITEMS = 9;
 local HEIGHT_NO_CONTENT = 71;
 
