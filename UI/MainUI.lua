@@ -35,7 +35,9 @@ end)()
 local TT_H_1, TT_H_2 = "|cff00FF00".."ZkyBomb".."|r", string.format("|cffFFFFFF%s|r", 'v1.0')
 local TT_TITLE = "|cffffd100%s|r"
 local TT_SINGLE = "%s：%s"
+local TT_SINGLE_WHITE = "%s：|cffffffff%s|r"
 local TT_SINGLE_LIGHT = "%s：|cff00ff00%s|r"
+local TT_SINGLE_HEAVY = "%s：|cffff0000%s|r"
 local TT_DOUBLE_L = "%s"
 local TT_DOUBLE_R = "|cff00ff00%s|r"
 local TT_ENTRY = "|cFFCFCFCF%s:|r %s"
@@ -202,6 +204,7 @@ do
     mainframe.readyButton:SetScript("OnEnter", function(self) 
         GameTooltip:SetOwner(self, "ANCHOR_TOPLEFT");
         GameTooltip:SetText(string.format(TT_TITLE, '就位准备'))
+        GameTooltip:AddLine(string.format(TT_SINGLE_WHITE, '通知', '否'))
         GameTooltip:Show()
     end);
 
@@ -232,6 +235,8 @@ do
     mainframe.resetButton:SetScript("OnEnter", function(self) 
         GameTooltip:SetOwner(self, "ANCHOR_TOPLEFT");
         GameTooltip:SetText(string.format(TT_TITLE, '重置副本'))
+        GameTooltip:AddLine(string.format(TT_SINGLE_LIGHT,'通知','是'));
+        GameTooltip:AddLine(string.format(TT_SINGLE_LIGHT,'内容','副本已重置'));
         GameTooltip:Show()
     end);
 

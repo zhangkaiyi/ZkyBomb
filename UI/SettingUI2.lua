@@ -10,7 +10,7 @@ local HEIGHT_NO_CONTENT = 71;
 local frame = CreateFrame("Frame", "ZKYBOMB_SettingUI2", ZKYBOMB_SettingUI, "ButtonFrameTemplate");
 frame:SetPoint('TOPLEFT', ZKYBOMB_SettingUI, 'TOPRIGHT', 5, 0)
 frame:SetPoint('BOTTOMLEFT', ZKYBOMB_SettingUI, 'BOTTOMRIGHT', 5, 180)
-frame:SetWidth(320);
+frame:SetWidth(300);
 frame:SetHeight(MIN_ITEMS*LIST_ITEM_HEIGHT + HEIGHT_NO_CONTENT);
 -- frame:SetResizable(true);
 frame:SetClampedToScreen(true);
@@ -269,7 +269,7 @@ frame2:SetClampedToScreen(true);
 -- frame:SetMinResize(250, MIN_ITEMS*LIST_ITEM_HEIGHT + HEIGHT_NO_CONTENT);
 -- frame:SetMovable(true);
 frame2:EnableMouse(true);
-frame2.TitleText:SetText('其他设置');
+frame2.TitleText:SetText('统计设置');
 -- frame2.portrait:SetTexture([[Interface\AddOns\ZkyBomb\img\logo]]);
 -- frame.CloseButton:SetScript('OnClick',nil)
 frame2.CloseButton:Hide()
@@ -346,7 +346,7 @@ do
     local resetFrame = ZKYBOMB_SettingUI22;
     resetFrame.sendTypeLabel = resetFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
     resetFrame.sendTypeLabel:SetPoint("TOPLEFT", resetFrame.messageLabel, "BOTTOMLEFT", 0, -20);
-    resetFrame.sendTypeLabel:SetText('通知方式');
+    resetFrame.sendTypeLabel:SetText('重置类型');
     resetFrame.sendTypeLabel:SetJustifyH("LEFT");
     resetFrame.sendTypeDropdown = CreateFrame("Frame", nil, resetFrame, "UIDropDownMenuTemplate");
     resetFrame.sendTypeDropdown:SetPoint("LEFT", resetFrame.sendTypeLabel, "RIGHT", -10, -4);
@@ -356,4 +356,18 @@ do
     UIDropDownMenu_SetWidth(resetFrame.sendTypeDropdown, resetFrame.messageEdit:GetWidth()-10);
     -- UIDropDownMenu_SetText(resetFrame.sendTypeDropdown,'队伍')
     UIDropDownMenu_Initialize(resetFrame.sendTypeDropdown, DropdownOpen)
+end
+
+do
+    local resetFrame = ZKYBOMB_SettingUI22;
+    resetFrame.increaseLabel = resetFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
+    resetFrame.increaseLabel:SetPoint("TOPLEFT", resetFrame.sendTypeLabel, "BOTTOMLEFT", 0, -20);
+    resetFrame.increaseLabel:SetText('计数通知');
+    resetFrame.increaseLabel:SetJustifyH("LEFT");
+    resetFrame.increaseEdit = MakeEditBox(resetFrame, 100, 27, false);
+    resetFrame.increaseEdit:SetPoint("LEFT", resetFrame.increaseLabel, "RIGHT", 5, -1);
+    resetFrame.increaseEdit:SetPoint("RIGHT", resetFrame, "RIGHT", -10, -1);
+    resetFrame.increaseEdit:SetScript("OnTextChanged", function(self) 
+        
+    end);
 end
