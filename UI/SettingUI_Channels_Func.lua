@@ -107,8 +107,8 @@ local function RecalculateSize(ignoreHeight)
 end
 
 --- Fill list from SV data
-function _addon:SettingUI_UpdateList()
-    -- print('_addon:SettingUI_UpdateList')
+function _addon:Update_SettingUI_Channels()
+    -- print('_addon:Update_SettingUI_Channels')
     entryCount = 0
     wipe(sortedEntries)
         local dbChannels = _addon:GetDbChannels()
@@ -142,13 +142,15 @@ function _addon:SettingUI_UpdateList()
 end
 
 --- Fill list from SV data
-function _addon:SettingUI_UpdateList2()
-    ZKYBOMB_SETTINGUI_TIMES.messageEdit:SetText(_addon:GetResetMessage());
+function _addon:Update_SettingUI_Times()
+    -- ZKYBOMB_SETTINGUI_TIMES.messageEdit:SetText(_addon:GetResetMessage());
     ZKYBOMB_SETTINGUI_TIMES.currentEdit:SetText(_addon:GetCurrentTimes());
     ZKYBOMB_SETTINGUI_TIMES.perRoundEdit:SetText(_addon:GetTimesPerRound());
     ZKYBOMB_SETTINGUI_TIMES.totalEdit:SetText(_addon:GetTotalTimes());
     ZKYBOMB_SETTINGUI_TIMES.isNotifyCheckbox:SetChecked(_addon.sv.times:GetIsNotify());
-    UIDropDownMenu_SetText(ZKYBOMB_SETTINGUI_TIMES.sendTypeDropdown, _addon.SENDTYPES[_addon:GetResetMessageSendType()])
+    ZKYBOMB_SETTINGUI_TIMES.messageEdit:SetText(_addon.sv.times:GetResetMessage());
+    ZKYBOMB_SETTINGUI_TIMES.increaseEdit:SetText(_addon.sv.times:GetIncreaseMessage());
+    UIDropDownMenu_SetText(ZKYBOMB_SETTINGUI_TIMES.sendTypeDropdown, _addon.SENDTYPES[_addon.sv.times:GetNotifyType()])
 end
 
 

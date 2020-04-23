@@ -97,8 +97,8 @@ function handlers.ADDON_LOADED(addonName)
     -- _addon:SetupSettings();
 
     _addon:MainUI_UpdateList()
-    _addon:SettingUI_UpdateList()
-    _addon:SettingUI_UpdateList2()
+    _addon:Update_SettingUI_Channels()
+    _addon:Update_SettingUI_Times()
     -- UpdateAddonState();
 
     -- if ZkyBombDB.firstStart then

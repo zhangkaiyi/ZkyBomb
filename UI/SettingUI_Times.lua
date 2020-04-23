@@ -146,10 +146,10 @@ local function DropdownOpen(self, level, menuList)
     devPrint('DropdownOpen Start')
     local info = UIDropDownMenu_CreateInfo();
     info.func = function(selfb, k, v)
-        ZkyBombDB.Times.Reset.MessageSendType = k;
+        _addon.sv.times:SetNotifyType(k)
         UIDropDownMenu_SetText(self, v);
     end;
-        local sendType = _addon:GetResetMessageSendType()
+        local sendType = _addon.sv.times:GetNotifyType()
         for arg1, arg2 in pairs(self.GetListItems()) do
         info.text = arg2;
         info.arg1 = arg1;
@@ -173,20 +173,20 @@ do
     theFrame.increaseEdit:SetPoint("LEFT", theFrame.increaseLabel, "RIGHT", 5, -1);
     theFrame.increaseEdit:SetPoint("RIGHT", theFrame.Inset, "RIGHT", -10, -1);
     theFrame.increaseEdit:SetScript("OnTextChanged", function(self) 
-        
+        _addon.sv.times:SetIncreaseMessage(self:GetText())
     end);
 end
 
 do
     theFrame.messageLabel = theFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
     theFrame.messageLabel:SetPoint("TOPLEFT", theFrame.increaseLabel, "BOTTOMLEFT", 0, -20);
-    theFrame.messageLabel:SetText('重置通知');
+    theFrame.messageLabel:SetText('清零通知');
     theFrame.messageLabel:SetJustifyH("LEFT");
     theFrame.messageEdit = MakeEditBox(theFrame, 100, 27, false);
     theFrame.messageEdit:SetPoint("LEFT", theFrame.messageLabel, "RIGHT", 5, -1);
     theFrame.messageEdit:SetPoint("RIGHT", theFrame.Inset, "RIGHT", -10, -1);
     theFrame.messageEdit:SetScript("OnTextChanged", function(self) 
-        ZkyBombDB.Times.Reset.Message = self:GetText()
+        _addon.sv.times:SetResetMessage(self:GetText())
     end);
 end
 

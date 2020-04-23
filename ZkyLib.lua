@@ -108,8 +108,8 @@ function _addon:ResetCurrentTimes()
     local svTable = self:GetSavedVariables()
     if svTable then
         svTable.Times.Current = 0;
-        if self:IsSendResetMessage() then
-            SendChatMessage(self:GetResetMessage(), self:GetResetMessageSendType())
+        if self.sv.times:GetIsNotify() then
+            SendChatMessage(self.sv.times:GetResetMessage(), self.sv.times:GetNotifyType())
         end
     end
 end
@@ -169,11 +169,41 @@ end
 
 
 function _addon.sv.times:GetIsNotify()
-    local svTable =_addon:GetSavedVariables();
-    return svTable.Times.IsNotify;
+    local svTable = _addon:GetSavedVariables()
+    return svTable.Times.IsNotify
 end
 
 function _addon.sv.times:SetIsNotify(checked)
-    local svTable =_addon:GetSavedVariables();
-    svTable.Times.IsNotify = checked;
+    local svTable = _addon:GetSavedVariables()
+    svTable.Times.IsNotify = checked
+end
+
+function _addon.sv.times:GetNotifyType()
+    local svTable = _addon:GetSavedVariables()
+    return svTable.Times.NotifyType
+end
+
+function _addon.sv.times:SetNotifyType(msg)
+    local svTable = _addon:GetSavedVariables()
+    svTable.Times.NotifyType = msg
+end
+
+function _addon.sv.times:GetIncreaseMessage()
+    local svTable = _addon:GetSavedVariables()
+    return svTable.Times.IncreaseMessage
+end
+
+function _addon.sv.times:SetIncreaseMessage(msg)
+    local svTable = _addon:GetSavedVariables()
+    svTable.Times.IncreaseMessage = msg
+end
+
+function _addon.sv.times:GetResetMessage()
+    local svTable = _addon:GetSavedVariables()
+    return svTable.Times.ResetMessage
+end
+
+function _addon.sv.times:SetResetMessage(msg)
+    local svTable = _addon:GetSavedVariables()
+    svTable.Times.ResetMessage = msg
 end

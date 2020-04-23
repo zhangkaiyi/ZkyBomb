@@ -67,8 +67,8 @@ mainframe:SetScript(
             devPrint(_addon:GetCurrentTimes()..' / '.._addon:GetTimesPerRound())
             devPrint(_addon:GetTotalTimes())
             _addon:MainUI_OpenList()
-            _addon:SettingUI_UpdateList()
-            _addon:SettingUI_UpdateList2()
+            _addon:Update_SettingUI_Channels()
+            _addon:Update_SettingUI_Times()
         end
     end
 )
