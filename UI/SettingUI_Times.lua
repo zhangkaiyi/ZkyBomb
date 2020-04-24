@@ -133,27 +133,31 @@ local function DropdownRefresh(self)
     end
     UIDropDownMenu_SetText(self, optionName);
 end;
+
 local function DropdownOpen(self, level, menuList)
-    devPrint('DropdownOpen Start')
-    local info = UIDropDownMenu_CreateInfo();
+    -- devPrint('DropdownOpen Start')
+    local info = UIDropDownMenu_CreateInfo()
     info.func = function(selfb, k, v)
         _addon.sv.times:SetNotifyType(k)
-        UIDropDownMenu_SetText(self, v);
-    end;
-        local sendType = _addon.sv.times:GetNotifyType()
-        for arg1, arg2 in pairs(self.GetListItems()) do
-        info.text = arg2;
-        info.arg1 = arg1;
-        info.arg2 = arg2;
-        if sendType ~= nil then
-            info.checked = (arg1 == sendType);
-        else
-            info.checked = false;
-        end
-        UIDropDownMenu_AddButton(info);
+        UIDropDownMenu_SetText(self, v)
     end
-    devPrint('DropdownOpen End')
+
+    local sendType = _addon.sv.times:GetNotifyType()
+
+    for arg1, arg2 in pairs(self.GetListItems()) do
+        info.text = arg2
+        info.arg1 = arg1
+        info.arg2 = arg2
+        if sendType ~= nil then
+            info.checked = (arg1 == sendType)
+        else
+            info.checked = false
+        end
+        UIDropDownMenu_AddButton(info)
+    end
+    -- devPrint('DropdownOpen End')
 end
+
 
 do
     theFrame.increaseLabel = theFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
@@ -226,6 +230,21 @@ do
 end
 
 do
+    theFrame.sendTypeLabel = theFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
+    theFrame.sendTypeLabel:SetPoint("LEFT", theFrame.isNotifyCheckbox, "RIGHT", 5, 0);
+    theFrame.sendTypeLabel:SetPoint("TOP", theFrame.isNotifyLabel, "TOP", 0, 0);
+    theFrame.sendTypeLabel:SetText('通知类型');
+    theFrame.sendTypeLabel:SetJustifyH("LEFT");
+    theFrame.sendTypeDropdown = CreateFrame("Frame", nil, theFrame, "UIDropDownMenuTemplate");
+    theFrame.sendTypeDropdown:SetPoint("LEFT", theFrame.sendTypeLabel, "RIGHT", -10, -3);
+    -- theFrame.sendTypeDropdown:SetPoint("RIGHT", theFrame.Inset, "RIGHT", 10, 0);
+    theFrame.sendTypeDropdown.RefreshState = DropdownRefresh;
+    theFrame.sendTypeDropdown.GetListItems = function() return SENDTYPES end;
+    UIDropDownMenu_SetWidth(theFrame.sendTypeDropdown, theFrame.messageEdit:GetWidth()-theFrame.isNotifyLabel:GetWidth() -24 -5 -10);
+    -- UIDropDownMenu_SetText(resetFrame.sendTypeDropdown,'队伍')
+    UIDropDownMenu_Initialize(theFrame.sendTypeDropdown, DropdownOpen)
+end
+do
     theFrame.isNotifyLabel3 = theFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
     theFrame.isNotifyLabel3:SetPoint("TOPLEFT", theFrame.isNotifyLabel2, "BOTTOMLEFT", 0, -15);
     theFrame.isNotifyLabel3:SetText('完成提示');
@@ -247,18 +266,3 @@ do
     -- theFrame.isNotifyCheckbox:SetPoint("RIGHT", theFrame.Inset, "RIGHT", 10, 0);
 end
 
-do
-    theFrame.sendTypeLabel = theFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
-    theFrame.sendTypeLabel:SetPoint("LEFT", theFrame.isNotifyCheckbox, "RIGHT", 5, 0);
-    theFrame.sendTypeLabel:SetPoint("TOP", theFrame.isNotifyLabel, "TOP", 0, 0);
-    theFrame.sendTypeLabel:SetText('通知类型');
-    theFrame.sendTypeLabel:SetJustifyH("LEFT");
-    theFrame.sendTypeDropdown = CreateFrame("Frame", nil, theFrame, "UIDropDownMenuTemplate");
-    theFrame.sendTypeDropdown:SetPoint("LEFT", theFrame.sendTypeLabel, "RIGHT", -10, -3);
-    -- theFrame.sendTypeDropdown:SetPoint("RIGHT", theFrame.Inset, "RIGHT", 10, 0);
-    theFrame.sendTypeDropdown.RefreshState = DropdownRefresh;
-    theFrame.sendTypeDropdown.GetListItems = function() return SENDTYPES end;
-    UIDropDownMenu_SetWidth(theFrame.sendTypeDropdown, theFrame.messageEdit:GetWidth()-theFrame.isNotifyLabel:GetWidth() -24 -5 -10);
-    -- UIDropDownMenu_SetText(resetFrame.sendTypeDropdown,'队伍')
-    UIDropDownMenu_Initialize(theFrame.sendTypeDropdown, DropdownOpen)
-end

@@ -103,7 +103,7 @@ end
 function _addon:GetNotifyType()
     local svTable = self:GetSavedVariables()
     if svTable then
-        return svTable.Messages.NotifyType or 'PARTY'
+        return svTable.Times.NotifyType
     end
 end
 
@@ -173,42 +173,58 @@ end
 
 function _addon.sv.times:GetIsNotify()
     local svTable = _addon:GetSavedVariables()
-    return svTable.Times.IsNotify
+    if svTable then
+        return svTable.Times.IsNotify
+    end
 end
 
 function _addon.sv.times:SetIsNotify(checked)
     local svTable = _addon:GetSavedVariables()
-    svTable.Times.IsNotify = checked
+    if svTable then
+        svTable.Times.IsNotify = checked
+    end
 end
 
 function _addon.sv.times:GetNotifyType()
     local svTable = _addon:GetSavedVariables()
-    return svTable.Times.NotifyType
+    if svTable then
+        return svTable.Times.NotifyType
+    end
 end
 
 function _addon.sv.times:SetNotifyType(msg)
     local svTable = _addon:GetSavedVariables()
-    svTable.Times.NotifyType = msg
+    if svTable then
+        svTable.Times.NotifyType = msg
+    end
 end
 
 function _addon.sv.times:GetIncreaseMessage()
     local svTable = _addon:GetSavedVariables()
-    return svTable.Times.IncreaseMessage
+    if svTable then
+        return svTable.Times.IncreaseMessage
+    end
 end
 
 function _addon.sv.times:SetIncreaseMessage(msg)
     local svTable = _addon:GetSavedVariables()
-    svTable.Times.IncreaseMessage = msg
+    if svTable then
+        svTable.Times.IncreaseMessage = msg
+    end
 end
 
 function _addon.sv.times:GetResetMessage()
     local svTable = _addon:GetSavedVariables()
-    return svTable.Times.ResetMessage
+    if svTable then
+        return svTable.Times.ResetMessage
+    end
 end
 
 function _addon.sv.times:SetResetMessage(msg)
     local svTable = _addon:GetSavedVariables()
-    svTable.Times.ResetMessage = msg
+    if svTable then
+        svTable.Times.ResetMessage = msg
+    end
 end
 
 function _addon.func.times:Increase()
@@ -233,7 +249,7 @@ end
 function _addon.func.times:Reset()
     local svTable = _addon:GetSavedVariables()
     if svTable then
-        svTable.Times.Current = 0;
+        svTable.Times.Current = 0
         if _addon.sv.times:GetIsNotify() then
             SendChatMessage(_addon.sv.times:GetResetMessage(), _addon.sv.times:GetNotifyType())
         end
