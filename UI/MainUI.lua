@@ -165,8 +165,14 @@ do
             if button == 'RightButton' then
                 _addon:ShowReset()
             else
-                -- _addon:TimesIncrease()
-                _addon.func.times:Increase()
+                local current = tonumber(_addon.sv.times:GetTimesCurrent())
+                local round = tonumber(_addon.sv.times:GetTimesPerRound())
+                if current >= round then
+                    _addon:ShowResetWhenFinished()
+                else
+                    _addon.func.times:Increase()
+                end
+
             end
         end
     )

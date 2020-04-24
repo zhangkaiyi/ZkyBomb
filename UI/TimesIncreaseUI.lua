@@ -67,7 +67,7 @@ function me:CreateResetWindow()
 	theFrame.Text = theFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
 	theFrame.Text:SetPoint("CENTER", theFrame, "CENTER", 0, -3)
 	theFrame.Text:SetTextColor(1.0, 1.0, 1.0)
-	theFrame.Text:SetText(L["Do you wish to reset the times?"])
+	theFrame.Text:SetText(L["This round is finished. Do you wish to reset the times?"])
 	-- Recount:AddFontString(theFrame.Text)
 
 	theFrame.YesButton = CreateFrame("Button", nil, theFrame, "OptionsButtonTemplate")
@@ -99,7 +99,7 @@ function me:CreateResetWindow()
 	-- Recount:AddWindow(theFrame)
 end
 
-function _addon:ShowReset()
+function _addon:ShowIncrease()
 	if me.ResetFrame == nil then
 		me:CreateResetWindow()
 	end
@@ -107,7 +107,7 @@ function _addon:ShowReset()
 	me.ResetFrame:Show()
 end
 
-function _addon:HideReset()
+function _addon:HideIncrease()
 	if me.ResetFrame == nil then
 		me:CreateResetWindow()
 	end

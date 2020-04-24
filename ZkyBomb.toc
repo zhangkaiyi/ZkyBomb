@@ -16,7 +16,8 @@ ZkyLib.lua
 main.lua
 
 UI/MainUI.lua
-UI/ResetUI.lua
+UI/TimesIncreaseUI.lua
+UI/TimesResetUI.lua
 
 UI/SettingUI_Messages.lua
 UI/SettingUI_Messages_Func.lua

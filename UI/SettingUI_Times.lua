@@ -78,10 +78,7 @@ do
     theFrame.currentEdit:SetNumeric(true)
     theFrame.currentEdit:SetScript('OnChar', mustnumber)
     theFrame.currentEdit:SetScript("OnTextChanged", function(self)
-        local svTable = _addon:GetSavedVariables()
-        if svTable then
-            svTable['Times']['Current'] = self:GetText()
-        end
+        _addon.sv.times:SetTimesCurrent(self:GetText())
     end);
 end
 -- 每轮次数
@@ -96,10 +93,7 @@ do
     theFrame.perRoundEdit:SetNumeric(true)
     theFrame.currentEdit:SetScript('OnChar', mustnumber)
     theFrame.perRoundEdit:SetScript("OnTextChanged", function(self) 
-        local svTable = _addon:GetSavedVariables()
-        if svTable then
-            svTable['Times']['PerRound'] = self:GetText()
-        end
+        _addon.sv.times:SetTimesPerRound(self:GetText())
     end);
 end
 -- 完成总数
@@ -114,10 +108,7 @@ do
     theFrame.totalEdit:SetNumeric(true)
     theFrame.totalEdit:SetScript('OnChar', mustnumber)
     theFrame.totalEdit:SetScript("OnTextChanged", function(self) 
-        local svTable = _addon:GetSavedVariables()
-        if svTable then
-            svTable['Times']['Total'] = self:GetText()
-        end
+        _addon.sv.times:SetTimesTotal(self:GetText())
     end);
 end
 
@@ -192,7 +183,7 @@ end
 
 do
     theFrame.isNotifyLabel = theFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
-    theFrame.isNotifyLabel:SetPoint("TOPLEFT", theFrame.messageLabel, "BOTTOMLEFT", 0, -20);
+    theFrame.isNotifyLabel:SetPoint("TOPLEFT", theFrame.messageLabel, "BOTTOMLEFT", 0, -15);
     theFrame.isNotifyLabel:SetText('是否通知');
     theFrame.isNotifyLabel:SetJustifyH("LEFT");
     theFrame.isNotifyCheckbox = CreateFrame("CheckButton", nil, theFrame);
@@ -209,6 +200,50 @@ do
     theFrame.isNotifyCheckbox:SetDisabledCheckedTexture([[Interface\Buttons\UI-CheckBox-Check-Disabled]]);
     theFrame.isNotifyCheckbox:SetPoint("LEFT", theFrame.isNotifyLabel, "RIGHT", 5, -1);
     theFrame.isNotifyCheckbox:SetSize(24, 24);
+    -- theFrame.isNotifyCheckbox:SetPoint("RIGHT", theFrame.Inset, "RIGHT", 10, 0);
+end
+
+do
+    theFrame.isNotifyLabel2 = theFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
+    theFrame.isNotifyLabel2:SetPoint("TOPLEFT", theFrame.isNotifyLabel, "BOTTOMLEFT", 0, -15);
+    theFrame.isNotifyLabel2:SetText('进本提示');
+    theFrame.isNotifyLabel2:SetJustifyH("LEFT");
+    theFrame.isNotifyCheckbox2 = CreateFrame("CheckButton", nil, theFrame);
+    theFrame.isNotifyCheckbox2:SetScript("OnClick", function(self)	
+        local svTable = _addon:GetSavedVariables()
+        if svTable then
+            _addon.sv.times:SetIsNotify(self:GetChecked());
+        end
+    end);
+    theFrame.isNotifyCheckbox2:SetNormalTexture([[Interface\Buttons\UI-CheckBox-Up]]);
+    theFrame.isNotifyCheckbox2:SetPushedTexture([[Interface\Buttons\UI-CheckBox-Down]]);
+    theFrame.isNotifyCheckbox2:SetHighlightTexture([[Interface\Buttons\UI-CheckBox-Highlight]], "ADD");
+    theFrame.isNotifyCheckbox2:SetCheckedTexture([[Interface\Buttons\UI-CheckBox-Check]]);
+    theFrame.isNotifyCheckbox2:SetDisabledCheckedTexture([[Interface\Buttons\UI-CheckBox-Check-Disabled]]);
+    theFrame.isNotifyCheckbox2:SetPoint("LEFT", theFrame.isNotifyLabel2, "RIGHT", 5, -1);
+    theFrame.isNotifyCheckbox2:SetSize(24, 24);
+    -- theFrame.isNotifyCheckbox:SetPoint("RIGHT", theFrame.Inset, "RIGHT", 10, 0);
+end
+
+do
+    theFrame.isNotifyLabel3 = theFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
+    theFrame.isNotifyLabel3:SetPoint("TOPLEFT", theFrame.isNotifyLabel2, "BOTTOMLEFT", 0, -15);
+    theFrame.isNotifyLabel3:SetText('完成提示');
+    theFrame.isNotifyLabel3:SetJustifyH("LEFT");
+    theFrame.isNotifyCheckbox3 = CreateFrame("CheckButton", nil, theFrame);
+    theFrame.isNotifyCheckbox3:SetScript("OnClick", function(self)	
+        local svTable = _addon:GetSavedVariables()
+        if svTable then
+            _addon.sv.times:SetIsNotify(self:GetChecked());
+        end
+    end);
+    theFrame.isNotifyCheckbox3:SetNormalTexture([[Interface\Buttons\UI-CheckBox-Up]]);
+    theFrame.isNotifyCheckbox3:SetPushedTexture([[Interface\Buttons\UI-CheckBox-Down]]);
+    theFrame.isNotifyCheckbox3:SetHighlightTexture([[Interface\Buttons\UI-CheckBox-Highlight]], "ADD");
+    theFrame.isNotifyCheckbox3:SetCheckedTexture([[Interface\Buttons\UI-CheckBox-Check]]);
+    theFrame.isNotifyCheckbox3:SetDisabledCheckedTexture([[Interface\Buttons\UI-CheckBox-Check-Disabled]]);
+    theFrame.isNotifyCheckbox3:SetPoint("LEFT", theFrame.isNotifyLabel3, "RIGHT", 5, -1);
+    theFrame.isNotifyCheckbox3:SetSize(24, 24);
     -- theFrame.isNotifyCheckbox:SetPoint("RIGHT", theFrame.Inset, "RIGHT", 10, 0);
 end
 

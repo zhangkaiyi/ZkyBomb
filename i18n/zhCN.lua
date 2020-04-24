@@ -74,5 +74,6 @@ L["UI_TIMES_TAOTAL"] = "总计：";
 
 L["Reset Times?"] = "重置计数"
 L["Do you wish to reset the times?"] = "你希望重置计数数据吗？"
+L["This round is finished. Do you wish to reset the times?"] = "本轮已结束，重置计数？"
 L["Yes"] = "是"
 L["No"] = "否"

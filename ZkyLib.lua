@@ -239,3 +239,45 @@ function _addon.func.times:Reset()
         end
     end
 end
+
+function _addon.sv.times:GetTimesCurrent()
+    local svTable = _addon:GetSavedVariables()
+    if svTable then
+        return svTable['Times']['Current']
+    end
+end
+
+function _addon.sv.times:SetTimesCurrent(val)
+    local svTable = _addon:GetSavedVariables()
+    if svTable then
+        svTable['Times']['Current'] = val
+    end
+end
+
+function _addon.sv.times:GetTimesPerRound()
+    local svTable = _addon:GetSavedVariables()
+    if svTable then
+        return svTable['Times']['PerRound']
+    end
+end
+
+function _addon.sv.times:SetTimesPerRound(val)
+    local svTable = _addon:GetSavedVariables()
+    if svTable then
+        svTable['Times']['PerRound'] = val
+    end
+end
+
+function _addon.sv.times:GetTimesTotal()
+    local svTable = _addon:GetSavedVariables()
+    if svTable then
+        return svTable['Times']['Total']
+    end
+end
+
+function _addon.sv.times:SetTimesTotal(val)
+    local svTable = _addon:GetSavedVariables()
+    if svTable then
+        svTable['Times']['Total'] = val
+    end
+end

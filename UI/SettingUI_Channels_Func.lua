@@ -144,9 +144,9 @@ end
 --- Fill list from SV data
 function _addon:Update_SettingUI_Times()
     -- ZKYBOMB_SETTINGUI_TIMES.messageEdit:SetText(_addon:GetResetMessage());
-    ZKYBOMB_SETTINGUI_TIMES.currentEdit:SetText(_addon:GetCurrentTimes());
-    ZKYBOMB_SETTINGUI_TIMES.perRoundEdit:SetText(_addon:GetTimesPerRound());
-    ZKYBOMB_SETTINGUI_TIMES.totalEdit:SetText(_addon:GetTotalTimes());
+    ZKYBOMB_SETTINGUI_TIMES.currentEdit:SetText(_addon.sv.times:GetTimesCurrent());
+    ZKYBOMB_SETTINGUI_TIMES.perRoundEdit:SetText(_addon.sv.times:GetTimesPerRound());
+    ZKYBOMB_SETTINGUI_TIMES.totalEdit:SetText(_addon.sv.times:GetTimesTotal());
     ZKYBOMB_SETTINGUI_TIMES.isNotifyCheckbox:SetChecked(_addon.sv.times:GetIsNotify());
     ZKYBOMB_SETTINGUI_TIMES.messageEdit:SetText(_addon.sv.times:GetResetMessage());
     ZKYBOMB_SETTINGUI_TIMES.increaseEdit:SetText(_addon.sv.times:GetIncreaseMessage());
