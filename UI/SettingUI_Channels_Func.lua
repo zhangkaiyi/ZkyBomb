@@ -147,9 +147,9 @@ function _addon:Update_SettingUI_Times()
     ZKYBOMB_SETTINGUI_TIMES.currentEdit:SetText(_addon.sv.times:GetTimesCurrent());
     ZKYBOMB_SETTINGUI_TIMES.perRoundEdit:SetText(_addon.sv.times:GetTimesPerRound());
     ZKYBOMB_SETTINGUI_TIMES.totalEdit:SetText(_addon.sv.times:GetTimesTotal());
-    ZKYBOMB_SETTINGUI_TIMES.isNotifyCheckbox:SetChecked(_addon.sv.times:GetIsNotify());
-    ZKYBOMB_SETTINGUI_TIMES.messageEdit:SetText(_addon.sv.times:GetResetMessage());
-    ZKYBOMB_SETTINGUI_TIMES.increaseEdit:SetText(_addon.sv.times:GetIncreaseMessage());
+    -- ZKYBOMB_SETTINGUI_TIMES.isNotifyCheckbox:SetChecked(_addon.sv.times:GetIsNotify());
+    ZKYBOMB_SETTINGUI_TIMES.editNotifyReset:SetText(_addon.sv.times:GetResetMessage());
+    ZKYBOMB_SETTINGUI_TIMES.editNotifyIncrease:SetText(_addon.sv.times:GetIncreaseMessage());
     UIDropDownMenu_SetText(ZKYBOMB_SETTINGUI_TIMES.sendTypeDropdown, _addon.SENDTYPES[_addon.sv.times:GetNotifyType()])
 end
 

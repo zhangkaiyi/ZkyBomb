@@ -142,14 +142,14 @@ local function DropdownOpen(self, level, menuList)
         UIDropDownMenu_SetText(self, v)
     end
 
-    local sendType = _addon.sv.times:GetNotifyType()
+    local notifyType = _addon.sv.times:GetNotifyType()
 
     for arg1, arg2 in pairs(self.GetListItems()) do
         info.text = arg2
         info.arg1 = arg1
         info.arg2 = arg2
-        if sendType ~= nil then
-            info.checked = (arg1 == sendType)
+        if notifyType ~= nil then
+            info.checked = (arg1 == notifyType)
         else
             info.checked = false
         end
@@ -160,109 +160,72 @@ end
 
 
 do
-    theFrame.increaseLabel = theFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
-    theFrame.increaseLabel:SetPoint("TOPLEFT", theFrame.Inset, "TOPLEFT", 10, -15);
-    theFrame.increaseLabel:SetText('计数通知');
-    theFrame.increaseLabel:SetJustifyH("LEFT");
-    theFrame.increaseEdit = MakeEditBox(theFrame, 100, 27, false);
-    theFrame.increaseEdit:SetPoint("LEFT", theFrame.increaseLabel, "RIGHT", 5, -1);
-    theFrame.increaseEdit:SetPoint("RIGHT", theFrame.Inset, "RIGHT", -10, -1);
-    theFrame.increaseEdit:SetScript("OnTextChanged", function(self) 
+    local cb = MakeCheckbox(theFrame, nil, 24, 24)
+    cb:SetPoint('TOPLEFT', theFrame.Inset, 'TOPLEFT', 8, -12)
+    theFrame.cbNotifyIncrease = cb
+    theFrame.labelNotifyIncrease = theFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
+    theFrame.labelNotifyIncrease:SetPoint("LEFT", cb, "RIGHT", 5, 2);
+    theFrame.labelNotifyIncrease:SetText('计数通知');
+    theFrame.labelNotifyIncrease:SetJustifyH("LEFT");
+    theFrame.editNotifyIncrease = MakeEditBox(theFrame, 100, 27, false);
+    theFrame.editNotifyIncrease:SetPoint("LEFT", theFrame.labelNotifyIncrease, "RIGHT", 5, 1);
+    theFrame.editNotifyIncrease:SetPoint("RIGHT", theFrame.Inset, "RIGHT", -10, 0);
+    theFrame.editNotifyIncrease:SetScript("OnTextChanged", function(self) 
         _addon.sv.times:SetIncreaseMessage(self:GetText())
     end);
 end
 
 do
-    theFrame.messageLabel = theFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
-    theFrame.messageLabel:SetPoint("TOPLEFT", theFrame.increaseLabel, "BOTTOMLEFT", 0, -20);
-    theFrame.messageLabel:SetText('清零通知');
-    theFrame.messageLabel:SetJustifyH("LEFT");
-    theFrame.messageEdit = MakeEditBox(theFrame, 100, 27, false);
-    theFrame.messageEdit:SetPoint("LEFT", theFrame.messageLabel, "RIGHT", 5, -1);
-    theFrame.messageEdit:SetPoint("RIGHT", theFrame.Inset, "RIGHT", -10, -1);
-    theFrame.messageEdit:SetScript("OnTextChanged", function(self) 
+    local cb = MakeCheckbox(theFrame, nil, 24, 24)
+    cb:SetPoint('TOPLEFT', theFrame.cbNotifyIncrease, 'BOTTOMLEFT', 0, -8)
+    theFrame.cbNotifyReset = cb
+    theFrame.labelNotifyReset = theFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
+    theFrame.labelNotifyReset:SetPoint("LEFT", cb, "RIGHT", 5, 2);
+    theFrame.labelNotifyReset:SetText('清零通知');
+    theFrame.labelNotifyReset:SetJustifyH("LEFT");
+    theFrame.editNotifyReset = MakeEditBox(theFrame, 100, 27, false);
+    theFrame.editNotifyReset:SetPoint("LEFT", theFrame.labelNotifyReset, "RIGHT", 5, 1);
+    theFrame.editNotifyReset:SetPoint("RIGHT", theFrame.Inset, "RIGHT", -10, 0);
+    theFrame.editNotifyReset:SetScript("OnTextChanged", function(self) 
         _addon.sv.times:SetResetMessage(self:GetText())
     end);
 end
 
 do
-    theFrame.isNotifyLabel = theFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
-    theFrame.isNotifyLabel:SetPoint("TOPLEFT", theFrame.messageLabel, "BOTTOMLEFT", 0, -15);
-    theFrame.isNotifyLabel:SetText('是否通知');
-    theFrame.isNotifyLabel:SetJustifyH("LEFT");
-    theFrame.isNotifyCheckbox = CreateFrame("CheckButton", nil, theFrame);
-    theFrame.isNotifyCheckbox:SetScript("OnClick", function(self)	
-        local svTable = _addon:GetSavedVariables()
-        if svTable then
-            _addon.sv.times:SetIsNotify(self:GetChecked());
-        end
-    end);
-    theFrame.isNotifyCheckbox:SetNormalTexture([[Interface\Buttons\UI-CheckBox-Up]]);
-    theFrame.isNotifyCheckbox:SetPushedTexture([[Interface\Buttons\UI-CheckBox-Down]]);
-    theFrame.isNotifyCheckbox:SetHighlightTexture([[Interface\Buttons\UI-CheckBox-Highlight]], "ADD");
-    theFrame.isNotifyCheckbox:SetCheckedTexture([[Interface\Buttons\UI-CheckBox-Check]]);
-    theFrame.isNotifyCheckbox:SetDisabledCheckedTexture([[Interface\Buttons\UI-CheckBox-Check-Disabled]]);
-    theFrame.isNotifyCheckbox:SetPoint("LEFT", theFrame.isNotifyLabel, "RIGHT", 5, -1);
-    theFrame.isNotifyCheckbox:SetSize(24, 24);
-    -- theFrame.isNotifyCheckbox:SetPoint("RIGHT", theFrame.Inset, "RIGHT", 10, 0);
+    local cb = MakeCheckbox(theFrame, nil, 24, 24)
+    cb:SetPoint('TOPLEFT', theFrame.cbNotifyReset, 'BOTTOMLEFT', 0, -8)
+    theFrame.cbNotifyEnterInstance = cb
+    theFrame.labelNotifyEnterInstance = theFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
+    theFrame.labelNotifyEnterInstance:SetPoint("LEFT", cb, "RIGHT", 5, 2);
+    theFrame.labelNotifyEnterInstance:SetText('进本计数提醒');
+    theFrame.labelNotifyEnterInstance:SetJustifyH("LEFT");
+    -- theFrame.editNotifyEnterInstance = MakeEditBox(theFrame, 100, 27, false);
+    -- theFrame.editNotifyEnterInstance:SetPoint("LEFT", theFrame.labelNotifyEnterInstance, "RIGHT", 5, 1);
+    -- theFrame.editNotifyEnterInstance:SetPoint("RIGHT", theFrame.Inset, "RIGHT", -10, 0);
 end
 
 do
-    theFrame.isNotifyLabel2 = theFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
-    theFrame.isNotifyLabel2:SetPoint("TOPLEFT", theFrame.isNotifyLabel, "BOTTOMLEFT", 0, -15);
-    theFrame.isNotifyLabel2:SetText('进本提示');
-    theFrame.isNotifyLabel2:SetJustifyH("LEFT");
-    theFrame.isNotifyCheckbox2 = CreateFrame("CheckButton", nil, theFrame);
-    theFrame.isNotifyCheckbox2:SetScript("OnClick", function(self)	
-        local svTable = _addon:GetSavedVariables()
-        if svTable then
-            _addon.sv.times:SetIsNotify(self:GetChecked());
-        end
-    end);
-    theFrame.isNotifyCheckbox2:SetNormalTexture([[Interface\Buttons\UI-CheckBox-Up]]);
-    theFrame.isNotifyCheckbox2:SetPushedTexture([[Interface\Buttons\UI-CheckBox-Down]]);
-    theFrame.isNotifyCheckbox2:SetHighlightTexture([[Interface\Buttons\UI-CheckBox-Highlight]], "ADD");
-    theFrame.isNotifyCheckbox2:SetCheckedTexture([[Interface\Buttons\UI-CheckBox-Check]]);
-    theFrame.isNotifyCheckbox2:SetDisabledCheckedTexture([[Interface\Buttons\UI-CheckBox-Check-Disabled]]);
-    theFrame.isNotifyCheckbox2:SetPoint("LEFT", theFrame.isNotifyLabel2, "RIGHT", 5, -1);
-    theFrame.isNotifyCheckbox2:SetSize(24, 24);
-    -- theFrame.isNotifyCheckbox:SetPoint("RIGHT", theFrame.Inset, "RIGHT", 10, 0);
+    local cb = MakeCheckbox(theFrame, nil, 24, 24)
+    cb:SetPoint('LEFT', theFrame.labelNotifyEnterInstance, 'RIGHT', 8, -2)
+    theFrame.cbNotifyFinished = cb
+    theFrame.labelNotifyFinished = theFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
+    theFrame.labelNotifyFinished:SetPoint("LEFT", cb, "RIGHT", 5, 2);
+    theFrame.labelNotifyFinished:SetText('完成重置提醒');
+    theFrame.labelNotifyFinished:SetJustifyH("LEFT");
 end
 
 do
-    theFrame.sendTypeLabel = theFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
-    theFrame.sendTypeLabel:SetPoint("LEFT", theFrame.isNotifyCheckbox, "RIGHT", 5, 0);
-    theFrame.sendTypeLabel:SetPoint("TOP", theFrame.isNotifyLabel, "TOP", 0, 0);
-    theFrame.sendTypeLabel:SetText('通知类型');
-    theFrame.sendTypeLabel:SetJustifyH("LEFT");
+    local cb = MakeCheckbox(theFrame, nil, 24, 24)
+    cb:SetPoint('TOPLEFT', theFrame.cbNotifyEnterInstance, 'BOTTOMLEFT', 0, -8)
+    theFrame.cblNotifyType = cb
+    theFrame.labelNotifyType = theFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
+    theFrame.labelNotifyType:SetPoint("LEFT", cb, "RIGHT", 5, 2);
+    theFrame.labelNotifyType:SetText('通知方式');
+    theFrame.labelNotifyType:SetJustifyH("LEFT");
     theFrame.sendTypeDropdown = CreateFrame("Frame", nil, theFrame, "UIDropDownMenuTemplate");
-    theFrame.sendTypeDropdown:SetPoint("LEFT", theFrame.sendTypeLabel, "RIGHT", -10, -3);
-    -- theFrame.sendTypeDropdown:SetPoint("RIGHT", theFrame.Inset, "RIGHT", 10, 0);
+    theFrame.sendTypeDropdown:SetPoint("LEFT", theFrame.labelNotifyType, "RIGHT", -10, -3);
     theFrame.sendTypeDropdown.RefreshState = DropdownRefresh;
     theFrame.sendTypeDropdown.GetListItems = function() return SENDTYPES end;
-    UIDropDownMenu_SetWidth(theFrame.sendTypeDropdown, theFrame.messageEdit:GetWidth()-theFrame.isNotifyLabel:GetWidth() -24 -5 -10);
-    -- UIDropDownMenu_SetText(resetFrame.sendTypeDropdown,'队伍')
+    UIDropDownMenu_SetWidth(theFrame.sendTypeDropdown, theFrame.labelNotifyType:GetWidth());
     UIDropDownMenu_Initialize(theFrame.sendTypeDropdown, DropdownOpen)
 end
-do
-    theFrame.isNotifyLabel3 = theFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
-    theFrame.isNotifyLabel3:SetPoint("TOPLEFT", theFrame.isNotifyLabel2, "BOTTOMLEFT", 0, -15);
-    theFrame.isNotifyLabel3:SetText('完成提示');
-    theFrame.isNotifyLabel3:SetJustifyH("LEFT");
-    theFrame.isNotifyCheckbox3 = CreateFrame("CheckButton", nil, theFrame);
-    theFrame.isNotifyCheckbox3:SetScript("OnClick", function(self)	
-        local svTable = _addon:GetSavedVariables()
-        if svTable then
-            _addon.sv.times:SetIsNotify(self:GetChecked());
-        end
-    end);
-    theFrame.isNotifyCheckbox3:SetNormalTexture([[Interface\Buttons\UI-CheckBox-Up]]);
-    theFrame.isNotifyCheckbox3:SetPushedTexture([[Interface\Buttons\UI-CheckBox-Down]]);
-    theFrame.isNotifyCheckbox3:SetHighlightTexture([[Interface\Buttons\UI-CheckBox-Highlight]], "ADD");
-    theFrame.isNotifyCheckbox3:SetCheckedTexture([[Interface\Buttons\UI-CheckBox-Check]]);
-    theFrame.isNotifyCheckbox3:SetDisabledCheckedTexture([[Interface\Buttons\UI-CheckBox-Check-Disabled]]);
-    theFrame.isNotifyCheckbox3:SetPoint("LEFT", theFrame.isNotifyLabel3, "RIGHT", 5, -1);
-    theFrame.isNotifyCheckbox3:SetSize(24, 24);
-    -- theFrame.isNotifyCheckbox:SetPoint("RIGHT", theFrame.Inset, "RIGHT", 10, 0);
-end
-
