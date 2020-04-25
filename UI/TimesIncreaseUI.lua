@@ -65,7 +65,7 @@ function me:CreateResetWindow()
 	-- Recount.Colors:RegisterFont("Other Windows", "Title Text", me.ResetFrame.Title)
 
 	theFrame.Text = theFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-	theFrame.Text:SetPoint("CENTER", theFrame, "CENTER", 0, -3)
+	theFrame.Text:SetPoint("CENTER", theFrame, "CENTER", 0, 0)
 	theFrame.Text:SetTextColor(1.0, 1.0, 1.0)
 	theFrame.Text:SetText(L["This time is in instance. Do you wish to increase the time count?"])
 	-- Recount:AddFontString(theFrame.Text)

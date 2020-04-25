@@ -236,7 +236,9 @@ end
 
 function _addon.sv.times:GetNotifyType()
     local svTable = _addon:GetSavedVariables()
-    if svTable ~= nil then
+    if svTable.Times.NotifyType == nil or svTable.Times.NotifyType == '' then
+        return 'PARTY'
+    else
         return svTable.Times.NotifyType
     end
 end

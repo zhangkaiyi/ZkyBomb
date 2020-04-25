@@ -1,6 +1,6 @@
 local _, _addon = ...
 
-isDevelopment = true;
+isDevelopment = false;
 
 function devPrint(...) if (isDevelopment) then print(...) end end
 

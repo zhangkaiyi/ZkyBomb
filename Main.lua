@@ -120,14 +120,17 @@ function handlers.ZONE_CHANGED_NEW_AREA(event)
     local currentTimes = tostring(_addon:GetCurrentTimes())
     local timesPerRound = tostring(_addon:GetTimesPerRound())
     local isFinished = (currentTimes >= timesPerRound)
+    local isAlertIncrease = _addon.sv.times:GetIsNotifyEnterInstance()
     if IsInInstance() then
         if isFinished then
             _addon:ShowResetWhenFinished()
         else
-            _addon:ShowIncrease();
+            if isAlertIncrease then
+                _addon:ShowIncrease();
+            end
         end
     else
-        _addon:HideReset()
+        _addon:HideIncrease()
     end
 end
 

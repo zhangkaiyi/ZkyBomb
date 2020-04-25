@@ -199,6 +199,31 @@ do
 end
 
 -------------------------------------
+-- 刷本统计
+-------------------------------------
+
+do
+    mainframe.statisticsButton = CreateFrame('Button', nil, mainframe, 'OptionsButtonTemplate')
+    mainframe.statisticsButton:SetWidth(btnConfig.Height)
+    mainframe.statisticsButton:SetHeight(btnConfig.Height)
+    mainframe.statisticsButton:SetPoint('LEFT', mainframe.countButton, 'RIGHT', 0, 0)
+    mainframe.statisticsButton:SetText('统')
+    mainframe.statisticsButton:RegisterForClicks('LeftButtonUp', 'RightButtonUp')
+    mainframe.statisticsButton:SetScript("OnEnter", function(self) 
+        GameTooltip:SetOwner(self, "ANCHOR_TOPLEFT");
+        GameTooltip:SetText(string.format(TT_TITLE, '统计'))
+        GameTooltip:AddLine(string.format(TT_SINGLE_LIGHT,'已完',_addon:GetTimesPerRound() .. ' - ' .. _addon:GetCurrentTimes()));
+        GameTooltip:AddLine(string.format(TT_SINGLE_LIGHT,'左键','增加计数'));
+        GameTooltip:AddLine(string.format(TT_SINGLE_LIGHT,'右键','清零'));
+        GameTooltip:Show()
+    end);
+
+    mainframe.statisticsButton:SetScript("OnLeave", GameTooltip_Hide);
+    
+    mainframe.statisticsButton:Hide()
+end
+
+-------------------------------------
 -- 团队就位
 -------------------------------------
 do
