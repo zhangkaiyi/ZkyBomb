@@ -16,7 +16,7 @@ function me:CreateResetWindow()
 	theFrame:ClearAllPoints()
 	theFrame:SetPoint("BOTTOM", ZKYBOMB_MainUI, 'TOP', 0, 20)
 	theFrame:SetHeight(100)
-	theFrame:SetWidth(200)
+	theFrame:SetWidth(210)
 
 	theFrame:SetBackdrop({
 		bgFile = "Interface\\Tooltips\\UI-Tooltip-Background", tile = true, tileSize = 16,
