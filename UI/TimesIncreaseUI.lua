@@ -58,7 +58,7 @@ function me:CreateResetWindow()
 	theFrame.Title = theFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
 	theFrame.Title:SetPoint("TOPLEFT", theFrame, "TOPLEFT", 6, -15)
 	theFrame.Title:SetTextColor(1.0, 1.0, 1.0, 1.0)
-	theFrame.Title:SetText(L["Reset Times?"])
+	theFrame.Title:SetText(L["Increase Times?"])
 	-- Recount:AddFontString(theFrame.Title)
 
 	-- Recount.Colors:UnregisterItem(me.ResetFrame.Title)

@@ -212,7 +212,7 @@ do
     mainframe.statisticsButton:SetScript("OnEnter", function(self) 
         GameTooltip:SetOwner(self, "ANCHOR_TOPLEFT");
         GameTooltip:SetText(string.format(TT_TITLE, '统计'))
-        GameTooltip:AddLine(string.format(TT_SINGLE_LIGHT,'已完',_addon:GetTimesPerRound() .. ' - ' .. _addon:GetCurrentTimes()));
+        GameTooltip:AddLine(string.format(TT_SINGLE_LIGHT,'已计',_addon:GetTimesPerRound() .. ' - ' .. _addon:GetCurrentTimes()));
         GameTooltip:AddLine(string.format(TT_SINGLE_LIGHT,'左键','增加计数'));
         GameTooltip:AddLine(string.format(TT_SINGLE_LIGHT,'右键','清零'));
         GameTooltip:Show()
