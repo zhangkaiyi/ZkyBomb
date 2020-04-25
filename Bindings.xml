@@ -10,6 +10,11 @@
       if(isDevelopment) then print('ZKYBOMB_OTHER_MESSAGE') end
       _bindings._addon:SendOtherMessage()
   </Binding>
+    <Binding name="ZKYBOMB_ONEKEY_MESSAGE" description="其他频道发送消息，如大喊、队伍">
+      if(isDevelopment) then print('ZKYBOMB_ONEKEY_MESSAGE') end
+      _bindings._addon:SendWorldMessage()
+      _bindings._addon:SendOtherMessage()
+  </Binding>
     <Binding name="ZKYBOMB_TIMES_INCREASE" description="打本次数加一">
       if(isDevelopment) then print('ZKYBOMB_TIMES_INCREASE') end
       _bindings._addon:TimesIncrease()

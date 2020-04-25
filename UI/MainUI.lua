@@ -163,12 +163,22 @@ do
         'OnClick',
         function(self, button)
             if button == 'RightButton' then
-                _addon:ShowReset()
+                if _addon.sv.times:GetIsNotifyReset() then
+                    _addon:ShowReset()
+                else
+
+                end
+                -- resetWindow.Text:SetText('强制重置刷本计数吗？')
             else
                 local current = tonumber(_addon.sv.times:GetTimesCurrent())
                 local round = tonumber(_addon.sv.times:GetTimesPerRound())
+                local isAlertFinished = _addon.sv.times:GetIsNotifyFinished()
                 if current >= round then
-                    _addon:ShowResetWhenFinished()
+                    if isAlertFinished then
+                        _addon:ShowResetWhenFinished()
+                    else
+                        _addon.func.times:Increase()    
+                    end
                 else
                     _addon.func.times:Increase()
                 end

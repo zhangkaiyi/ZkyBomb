@@ -162,6 +162,7 @@ end
 do
     local cb = MakeCheckbox(theFrame, nil, 24, 24)
     cb:SetPoint('TOPLEFT', theFrame.Inset, 'TOPLEFT', 8, -12)
+    cb:SetScript('OnClick', function(self) _addon.sv.times:SetIsNotifyIncrease(self:GetChecked()); end)
     theFrame.cbNotifyIncrease = cb
     theFrame.labelNotifyIncrease = theFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
     theFrame.labelNotifyIncrease:SetPoint("LEFT", cb, "RIGHT", 5, 2);
@@ -178,6 +179,7 @@ end
 do
     local cb = MakeCheckbox(theFrame, nil, 24, 24)
     cb:SetPoint('TOPLEFT', theFrame.cbNotifyIncrease, 'BOTTOMLEFT', 0, -8)
+    cb:SetScript('OnClick', function(self) _addon.sv.times:SetIsNotifyReset(self:GetChecked()); end)
     theFrame.cbNotifyReset = cb
     theFrame.labelNotifyReset = theFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
     theFrame.labelNotifyReset:SetPoint("LEFT", cb, "RIGHT", 5, 2);
@@ -194,6 +196,7 @@ end
 do
     local cb = MakeCheckbox(theFrame, nil, 24, 24)
     cb:SetPoint('TOPLEFT', theFrame.cbNotifyReset, 'BOTTOMLEFT', 0, -8)
+    cb:SetScript('OnClick', function(self) _addon.sv.times:SetIsNotifyEnterInstance(self:GetChecked()); end)
     theFrame.cbNotifyEnterInstance = cb
     theFrame.labelNotifyEnterInstance = theFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
     theFrame.labelNotifyEnterInstance:SetPoint("LEFT", cb, "RIGHT", 5, 2);
@@ -207,6 +210,7 @@ end
 do
     local cb = MakeCheckbox(theFrame, nil, 24, 24)
     cb:SetPoint('LEFT', theFrame.labelNotifyEnterInstance, 'RIGHT', 8, -2)
+    cb:SetScript('OnClick', function(self) _addon.sv.times:SetIsNotifyFinished(self:GetChecked()); end)
     theFrame.cbNotifyFinished = cb
     theFrame.labelNotifyFinished = theFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
     theFrame.labelNotifyFinished:SetPoint("LEFT", cb, "RIGHT", 5, 2);
@@ -217,6 +221,7 @@ end
 do
     local cb = MakeCheckbox(theFrame, nil, 24, 24)
     cb:SetPoint('TOPLEFT', theFrame.cbNotifyEnterInstance, 'BOTTOMLEFT', 0, -8)
+    cb:Hide()
     theFrame.cblNotifyType = cb
     theFrame.labelNotifyType = theFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal");
     theFrame.labelNotifyType:SetPoint("LEFT", cb, "RIGHT", 5, 2);

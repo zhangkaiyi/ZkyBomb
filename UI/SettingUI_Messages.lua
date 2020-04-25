@@ -164,7 +164,7 @@ do
     addFrame.searchLabel:SetPoint("TOPRIGHT", addFrame.title, "BOTTOMRIGHT", 0, -16);
     addFrame.searchLabel:SetText(L["UI_ADDFORM_NAME"]);
     addFrame.searchLabel:SetJustifyH("LEFT");
-    addFrame.searchEdit = MakeEditBox(addFrame, 40, 27, true);
+    addFrame.searchEdit = MakeEditBox(addFrame, 200, 27, true);
     addFrame.searchEdit:SetPoint("TOPLEFT", addFrame.searchLabel, "BOTTOMLEFT", 0, -4);
     addFrame.searchEdit:SetPoint("TOPRIGHT", addFrame.searchLabel, "BOTTOMRIGHT", 0, -4);
     addFrame.okbutton = CreateFrame("Button", nil, addFrame, "OptionsButtonTemplate");
@@ -188,7 +188,7 @@ do
     editFrame.searchLabel:SetPoint("TOPRIGHT", editFrame.title, "BOTTOMRIGHT", 0, -16);
     editFrame.searchLabel:SetText(L["UI_ADDFORM_NAME"]);
     editFrame.searchLabel:SetJustifyH("LEFT");
-    editFrame.searchEdit = MakeEditBox(editFrame, 40, 27, true);
+    editFrame.searchEdit = MakeEditBox(editFrame, 200, 27, true);
     editFrame.searchEdit:SetPoint("TOPLEFT", editFrame.searchLabel, "BOTTOMLEFT", 0, -4);
     editFrame.searchEdit:SetPoint("TOPRIGHT", editFrame.searchLabel, "BOTTOMRIGHT", 0, -4);
     editFrame.okbutton = CreateFrame("Button", nil, editFrame, "OptionsButtonTemplate");

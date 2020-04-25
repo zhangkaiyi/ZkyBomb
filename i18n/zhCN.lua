@@ -73,7 +73,8 @@ L["UI_TIMES_PERROUND"] = "每轮：";
 L["UI_TIMES_TAOTAL"] = "总计：";
 
 L["Reset Times?"] = "重置计数"
-L["Do you wish to reset the times?"] = "你希望重置计数数据吗？"
-L["This round is finished. Do you wish to reset the times?"] = "本轮已结束，重置计数？"
+L["Do you wish to reset the times?"] = "你决定强制清除刷本计数吗？"
+L["This round is finished. Do you wish to reset the times?"] = "本轮结束，清除刷本计数吗？"
+L["This time is in instance. Do you wish to increase the time count?"] = "进入副本，递增刷本计数吗？"
 L["Yes"] = "是"
 L["No"] = "否"

@@ -14,7 +14,7 @@ function me:CreateResetWindow()
 	local theFrame = me.ResetFrame
 
 	theFrame:ClearAllPoints()
-	theFrame:SetPoint("CENTER",UIParent)
+	theFrame:SetPoint("BOTTOM", ZKYBOMB_MainUI, 'TOP', 0, 20)
 	theFrame:SetHeight(100)
 	theFrame:SetWidth(200)
 
@@ -65,7 +65,7 @@ function me:CreateResetWindow()
 	-- Recount.Colors:RegisterFont("Other Windows", "Title Text", me.ResetFrame.Title)
 
 	theFrame.Text = theFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-	theFrame.Text:SetPoint("CENTER", theFrame, "CENTER", 0, -3)
+	theFrame.Text:SetPoint("CENTER", theFrame, "CENTER", 0, 0)
 	theFrame.Text:SetTextColor(1.0, 1.0, 1.0)
 	theFrame.Text:SetText(L["Do you wish to reset the times?"])
 	-- Recount:AddFontString(theFrame.Text)
@@ -105,6 +105,7 @@ function _addon:ShowReset()
 	end
 	me.ResetFrame.Text:SetText(L["Do you wish to reset the times?"])
 	me.ResetFrame:Show()
+	return me.ResetFrame
 end
 
 function _addon:ShowResetWhenFinished()
@@ -113,6 +114,7 @@ function _addon:ShowResetWhenFinished()
 	end
 	me.ResetFrame.Text:SetText(L["This round is finished. Do you wish to reset the times?"])
 	me.ResetFrame:Show()
+	return me.ResetFrame
 end
 
 function _addon:HideReset()
@@ -121,4 +123,5 @@ function _addon:HideReset()
 	end
 
 	me.ResetFrame:Hide()
+	return me.ResetFrame
 end
